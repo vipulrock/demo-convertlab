@@ -1,11 +1,17 @@
-<div class="image-grid">
-  <img src="image1.jpg" alt="Image 1"/>
-  <img src="image2.jpg" alt="Image 2"/>
-  <img src="image3.jpg" alt="Image 3"/>
-  <img src="image4.jpg" alt="Image 4"/>
-  <img src="image5.jpg" alt="Image 5"/>
-  <img src="image6.jpg" alt="Image 6"/>
-</div>
+<div class="inspired-section">
+    <div class="inspired-header">
+      <div class="inspired-title">GET INSPIRED</div>
+      <div class="inspired-hashtag">#WEARINGONDELLEMMA</div>
+    </div>
+    <div class="image-grid">
+      <img src="image1.jpg" alt="Image 1"/>
+      <img src="image2.jpg" alt="Image 2"/>
+      <img src="image3.jpg" alt="Image 3"/>
+      <img src="image4.jpg" alt="Image 4"/>
+      <img src="image5.jpg" alt="Image 5"/>
+      <img src="image6.jpg" alt="Image 6"/>
+    </div>
+  </div>
 
 <style>
 .image-grid {
@@ -22,6 +28,40 @@
 @media (max-width: 768px) {
   .image-grid img {
     width: 100%;
+  }
+}
+
+.inspired-section {
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.inspired-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.inspired-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.inspired-hashtag {
+  font-size: 0.95rem;
+  color: #444;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .inspired-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }
 </style>
