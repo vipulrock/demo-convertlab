@@ -1,67 +1,69 @@
-<div class="inspired-section">
-    <div class="inspired-header">
-      <div class="inspired-title">GET INSPIRED</div>
-      <div class="inspired-hashtag">#WEARINGONDELLEMMA</div>
-    </div>
-    <div class="image-grid">
-      <img src="image1.jpg" alt="Image 1"/>
-      <img src="image2.jpg" alt="Image 2"/>
-      <img src="image3.jpg" alt="Image 3"/>
-      <img src="image4.jpg" alt="Image 4"/>
-      <img src="image5.jpg" alt="Image 5"/>
-      <img src="image6.jpg" alt="Image 6"/>
-    </div>
+<div class="announcement-bar">
+  <div class="announcement-track">
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <!-- Repeat announcements for seamless infinite effect -->
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p> 
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
+    <span class="star">&#9733;</span>
+    <p>RESTOCK SUNDAY AT 21:00H</p>
   </div>
-
+</div>
 <style>
-.image-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px; /* space between images */
-}
-
-.image-grid img {
-  width: calc(33.333% - 10.67px); /* 3 columns, minus gap */
-  box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-  .image-grid img {
-    width: 100%;
-  }
-}
-
-.inspired-section {
+.announcement-bar {
   width: 100%;
-  margin: 0 auto;
-  padding: 24px 0;
+  overflow: hidden;
+  background: #222;
+  color: #fff;
+  padding: 10px 0;
+  box-sizing: border-box;
+  position: relative;
 }
-
-.inspired-header {
+.announcement-track {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 24px;
+  width: max-content;
+  animation: scroll-left 20s linear infinite;
+  gap: 10px;
+  align-items: center;
 }
-
-.inspired-title {
+.announcement-bar p {
+  margin: 0;
+  white-space: nowrap;
+  font-size: 10px;
+  padding: 0;
+}
+.star {
+  color: gold;
   font-size: 1.2rem;
-  font-weight: bold;
-  letter-spacing: 1px;
+  margin: 0 10px;
 }
-
-.inspired-hashtag {
-  font-size: 0.95rem;
-  color: #444;
-  font-weight: 500;
-  margin-top: 4px;
-}
-
-@media (max-width: 768px) {
-  .inspired-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 </style>
