@@ -1,0 +1,164 @@
+<section class="press-section">
+  <div class="press-quote" id="press-quote"></div>
+  <div class="press-logos">
+    
+    <div class="press-logo" data-quote="1 Cómo conseguir unos vaqueros One Dilemma: Los secretos detrás de la firma española más viral de la historia">
+      <img src="https://cdn.shopify.com/s/files/1/0888/9820/8113/files/LogoElle_1.png?v=1749556484" alt="" width="" height="" />
+    </div>
+    
+    <div class="press-logo" data-quote="2 Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio.">
+      <img src="https://cdn.shopify.com/s/files/1/0888/9820/8113/files/LogoElle_2.png?v=1749556484" alt="" width="" height="" />
+    </div>
+    
+    <div class="press-logo" data-quote="3 At vero eos et accusamus et iusto odio dignissimos ducimus"> 
+      <img src="https://cdn.shopify.com/s/files/1/0888/9820/8113/files/LogoElle_3.png?v=1749556483" alt="" width="" height="" />    
+    </div>
+    
+    <div class="press-logo" data-quote="4 texto estándar de Lorem Ipsum usado desde el año 1500 es">
+      <img src="https://cdn.shopify.com/s/files/1/0888/9820/8113/files/LogoElle_4.png?v=1749556485" alt="" width="" height="" />
+    </div>
+
+    <div class="press-logo" data-quote="5 Cómo conseguir unos vaqueros One Dilemma: Los secretos detrás de la firma española más viral de la historia">
+      <img src="https://cdn.shopify.com/s/files/1/0888/9820/8113/files/LogoElle_1.png?v=1749556484" alt="" width="" height="" />
+    </div>
+    
+    <div class="press-logo" data-quote="6 Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio.">
+      <img src="https://cdn.shopify.com/s/files/1/0888/9820/8113/files/LogoElle_2.png?v=1749556484" alt="" width="" height="" />
+    </div>
+    
+    <div class="press-logo" data-quote="7 At vero eos et accusamus et iusto odio dignissimos ducimus">
+      <img src="https://cdn.shopify.com/s/files/1/0888/9820/8113/files/LogoElle_3.png?v=1749556483" alt="" width="" height="" />    
+    </div>
+    
+    <div class="press-logo" data-quote="8 texto estándar de Lorem Ipsum usado desde el año 1500 es">
+      <img src="https://cdn.shopify.com/s/files/1/0888/9820/8113/files/LogoElle_4.png?v=1749556485" alt="" width="" height="" />
+    </div>
+    
+  </div>
+</section>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<style>
+  .press-section {
+    background: #ed9ab6;
+    padding: 82px 0 64px;
+    text-align: center;
+    color: #fff;
+    min-height: inherit;
+    @media only screen and (max-width: 749px) {
+        padding: 70px 0;
+    }
+  }
+  .press-quote {
+      font-size: 2rem;
+      font-style: italic;
+      min-height: inherit;
+      transition: opacity 0.3s;
+      max-width: 560px;
+      margin: 0 auto 70px;
+      line-height: 1.2;
+      text-align: center;
+      @media only screen and (max-width: 749px) {
+          margin: 0 auto 50px;    
+          font-size: 1.6rem;
+          max-width: 340px;
+      }
+  }
+  .press-logos {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .press-logo {
+    opacity: 0.25;
+    transition: opacity 0.25s;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
+  }
+  .press-logo img {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .slick-center .press-logo {
+    opacity: 1;
+    color: #fff;
+  }  
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+ 
+<script>
+  $(document).ready(function(){
+    var $slider = $('.press-logos');
+    $slider.slick({
+      centerMode: true,
+      centerPadding: '260px',
+      slidesToShow: 3,
+      arrows: false,
+      focusOnSelect: true,
+      infinite: true,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      responsive: [
+        {
+          breakpoint: 1200,
+          settings: {
+            slidesToShow: 3,
+            centerPadding: '140px',
+          }
+        },
+        {
+          breakpoint: 990,
+          settings: {
+            slidesToShow: 2,
+            centerPadding: '150px',
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            centerPadding: '100px',
+          }
+        }
+      ]
+    });
+
+    function updateQuote() {
+      var $centerSlide = $slider.find('.slick-center');
+      var slickIndex = $centerSlide.attr('data-slick-index');
+      var $originalLogo = $slider.find('.press-logo[data-slick-index="' + slickIndex + '"]');
+      if ($originalLogo.length === 0) {
+        $originalLogo = $slider.find('.press-logo').first();
+      }
+      var quote = $originalLogo.data('quote');
+      var $quoteDiv = $('#press-quote');
+      $quoteDiv.css('opacity', 0);
+      setTimeout(function(){
+        $quoteDiv.text(quote);
+        $quoteDiv.css('opacity', 1);
+      }, 200);
+    }
+
+    $slider.on('init', function(){
+      setTimeout(updateQuote, 100);
+    });
+    setTimeout(updateQuote, 200); // Ensures quote is visible on load
+
+    $slider.on('afterChange', function(){
+      updateQuote();
+    });
+
+    var resizeTimeout;
+    $(window).on('resize', function(){
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updateQuote, 200);
+    });
+
+    $slider.slick('setPosition');
+  });
+</script>
