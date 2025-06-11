@@ -129,13 +129,16 @@
     });
 
     function updateQuote() {
-      var $centerSlide = $slider.find('.slick-center');
-      var slickIndex = $centerSlide.attr('data-slick-index');
-      var $originalLogo = $slider.find('.press-logo[data-slick-index="' + slickIndex + '"]');
-      if ($originalLogo.length === 0) {
-        $originalLogo = $slider.find('.press-logo').first();
+      // Get the current center slide index using Slick's API
+      var currentIndex = $slider.slick('slickCurrentSlide');
+      // Find all original (not cloned) press-logo elements
+      var $allLogos = $slider.find('.press-logo').not('.slick-cloned');
+      // Get the logo at the current index
+      var $logo = $allLogos.eq(currentIndex);
+      if ($logo.length === 0) {
+        $logo = $allLogos.first();
       }
-      var quote = $originalLogo.data('quote');
+      var quote = $logo.data('quote');
       var $quoteDiv = $('#press-quote');
       $quoteDiv.css('opacity', 0);
       setTimeout(function(){
