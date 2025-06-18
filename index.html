@@ -172,22 +172,92 @@
       }
     }
     @media (max-width: 600px) {
-      .video-card {
-        min-width: 90vw;
-        max-width: 90vw;
-        height: 160vw;
-        max-height: 80vh;
+      .slider-section {
+        flex-direction: column;
+      }
+      .slider-left {
+        width: 100%;
+        min-width: 0;
+        padding: 16px 10px 0 10px;
+        height: auto;
+        justify-content: flex-start;
+        align-items: flex-start;
       }
       .slider-left-text {
         font-size: 1rem;
         margin-bottom: 8px;
+        color: #000;
+        display: block;
       }
       .slider-controls {
-        margin: 12px 0 0 12px;
+        display: none !important;
+      }
+      .slider-right {
+        width: 100%;
+        min-width: 0;
+        padding: 0;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+      }
+      .video-slider-wrapper {
+        width: 100vw;
+        overflow: hidden;
+        position: relative;
+        margin: 0 auto;
+      }
+      .video-slider {
+        display: flex;
+        gap: 8px;
+        height: auto;
+        transition: transform 0.5s cubic-bezier(.77,0,.18,1);
+        will-change: transform;
+        scroll-snap-type: none;
+      }
+      .video-card {
+        min-width: 80vw;
+        max-width: 80vw;
+        height: 140vw;
+        max-height: 70vh;
+        margin: 0;
+        scroll-snap-align: center;
+      }
+      .video-slider-scrollbar {
+        width: 100vw;
+        height: 6px;
+        background: gray;
+        border-radius: 3px;
+        margin: 8px 0 0 0;
+        position: relative;
+        overflow: hidden;
+        display: block;
+      }
+      .video-slider-scrollbar-thumb {
+        height: 100%;
+        background: #000;
+        border-radius: 3px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: left 0.3s;
+      }
+    }
+    /* Custom scrollbar for mobile */
+    @media (max-width: 600px) {
+      .video-slider::-webkit-scrollbar {
+        height: 8px;
+      }
+      .video-slider::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+      }
+      .video-slider::-webkit-scrollbar-track {
+        background: #eee;
+        border-radius: 4px;
       }
     }
   </style>
-   <section class="slider-section">
+  <section class="slider-section">
     <div class="slider-left">
       <div class="slider-left-text">Customer Reviews</div>
       <div class="slider-controls">
@@ -196,42 +266,49 @@
       </div>
     </div>
     <div class="slider-right">
-      <div class="video-slider" id="videoSlider">
-        <div class="video-card">
-          <video src="v1.mp4" preload="none" ></video>
-          <button class="play-btn" aria-label="Play">&#9658;</button>
+      <div class="video-slider-wrapper">
+        <div class="video-slider" id="videoSlider">
+          <div class="video-card">
+            <video src="v1.mp4" preload="none" ></video>
+            <button class="play-btn" aria-label="Play">&#9658;</button>
+          </div>
+          <div class="video-card">
+            <video src="v1.mp4" preload="none" ></video>
+            <button class="play-btn" aria-label="Play">&#9658;</button>
+          </div>
+          <div class="video-card">
+            <video src="v1.mp4" preload="none" ></video>
+            <button class="play-btn" aria-label="Play">&#9658;</button>
+          </div>
+          <div class="video-card">
+            <video src="v1.mp4" preload="none" ></video>
+            <button class="play-btn" aria-label="Play">&#9658;</button>
+          </div>
+          <div class="video-card">
+            <video src="v1.mp4" preload="none" ></video>
+            <button class="play-btn" aria-label="Play">&#9658;</button>
+          </div>
+          <div class="video-card">
+            <video src="v1.mp4" preload="none" ></video>
+            <button class="play-btn" aria-label="Play">&#9658;</button>
+          </div>
+          <div class="video-card">
+            <video src="v1.mp4" preload="none" ></video>
+            <button class="play-btn" aria-label="Play">&#9658;</button>
+          </div>
+          <div class="video-card">
+            <video src="v1.mp4" preload="none" ></video>
+            <button class="play-btn" aria-label="Play">&#9658;</button>
+          </div>
         </div>
-        <div class="video-card">
-          <video src="v1.mp4" preload="none" ></video>
-          <button class="play-btn" aria-label="Play">&#9658;</button>
-        </div>
-        <div class="video-card">
-          <video src="v1.mp4" preload="none" ></video>
-          <button class="play-btn" aria-label="Play">&#9658;</button>
-        </div>
-        <div class="video-card">
-          <video src="v1.mp4" preload="none" ></video>
-          <button class="play-btn" aria-label="Play">&#9658;</button>
-        </div>
-        <div class="video-card">
-          <video src="v1.mp4" preload="none" ></video>
-          <button class="play-btn" aria-label="Play">&#9658;</button>
-        </div>
-        <div class="video-card">
-          <video src="v1.mp4" preload="none" ></video>
-          <button class="play-btn" aria-label="Play">&#9658;</button>
-        </div>
-        <div class="video-card">
-          <video src="v1.mp4" preload="none" ></video>
-          <button class="play-btn" aria-label="Play">&#9658;</button>
-        </div>
-        <div class="video-card">
-          <video src="v1.mp4" preload="none" ></video>
-          <button class="play-btn" aria-label="Play">&#9658;</button>
+        <div class="video-slider-scrollbar" id="videoSliderScrollbar" style="display:none;">
+          <div class="video-slider-scrollbar-thumb" id="videoSliderScrollbarThumb"></div>
         </div>
       </div>
     </div>
   </section>
+  <!-- Mobile: Scrollbar below slider -->
+  <div class="mobile-scrollbar" style="display:none;"></div>
   <script>
     const slider = document.getElementById('videoSlider');
     const prevBtn = document.getElementById('prevBtn');
@@ -249,35 +326,88 @@
       return parseInt(style.gap) || 0;
     }
     function updateSlider() {
-      // Recalculate cardWidth in case of resize
+      const isMobile = window.innerWidth <= 600;
       const cardWidth = videoCards[0].offsetWidth + getGap();
-      const translateX = -(currentIndex * cardWidth);
-      slider.style.transform = `translateX(${translateX}px)`;
-      // Disable prev/next at bounds
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex >= videoCards.length - Math.ceil(cardsToShow);
+      if (isMobile) {
+        // Center the active card, show 10% of prev/next
+        const offset = (window.innerWidth - videoCards[0].offsetWidth) / 2;
+        slider.style.transform = `translateX(${-currentIndex * cardWidth + offset}px)`;
+      } else {
+        const translateX = -(currentIndex * cardWidth);
+        slider.style.transform = `translateX(${translateX}px)`;
+      }
+      // No disabling of arrows for infinite
+    }
+
+    function updateMobileScrollbar() {
+      const scrollbar = document.getElementById('videoSliderScrollbar');
+      const thumb = document.getElementById('videoSliderScrollbarThumb');
+      if (window.innerWidth > 600) {
+        scrollbar.style.display = 'none';
+        return;
+      }
+      scrollbar.style.display = 'block';
+      const total = videoCards.length;
+      const visible = 1; // 1 card visible at a time
+      const percent = visible / total;
+      const thumbWidth = percent * scrollbar.offsetWidth;
+      thumb.style.width = thumbWidth + 'px';
+      // Calculate left position
+      const maxIndex = total;
+      const left = (currentIndex / maxIndex) * (scrollbar.offsetWidth - thumbWidth);
+      thumb.style.left = left + 'px';
+    }
+    // Call updateMobileScrollbar on slide change and resize
+    function updateSliderAndScrollbar() {
+      updateSlider();
+      updateMobileScrollbar();
     }
 
     prevBtn.addEventListener('click', () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        // Pause all videos and show play buttons
-        videos.forEach((v, i) => {
-          if (!v.paused) v.pause();
-          playBtns[i].style.display = '';
-        });
-        updateSlider();
-      }
+      currentIndex = (currentIndex - 1 + videoCards.length) % videoCards.length;
+      videos.forEach((v, i) => {
+        if (!v.paused) v.pause();
+        playBtns[i].style.display = '';
+      });
+      updateSliderAndScrollbar();
     });
     nextBtn.addEventListener('click', () => {
-      if (currentIndex < videoCards.length - Math.ceil(cardsToShow)) {
-        currentIndex++;
-        // Pause all videos and show play buttons
+      currentIndex = (currentIndex + 1) % videoCards.length;
+      videos.forEach((v, i) => {
+        if (!v.paused) v.pause();
+        playBtns[i].style.display = '';
+      });
+      updateSliderAndScrollbar();
+    });
+
+    // Mobile: swipe support for infinite scroll
+    let startX = 0;
+    let isDragging = false;
+    slider.addEventListener('touchstart', (e) => {
+      if (window.innerWidth > 600) return;
+      isDragging = true;
+      startX = e.touches[0].clientX;
+    });
+    slider.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      // Optionally, implement drag effect
+    });
+    slider.addEventListener('touchend', (e) => {
+      if (window.innerWidth > 600) return;
+      isDragging = false;
+      const endX = e.changedTouches[0].clientX;
+      const diff = endX - startX;
+      if (Math.abs(diff) > 50) {
+        if (diff < 0) {
+          currentIndex = (currentIndex + 1) % videoCards.length;
+        } else {
+          currentIndex = (currentIndex - 1 + videoCards.length) % videoCards.length;
+        }
         videos.forEach((v, i) => {
           if (!v.paused) v.pause();
           playBtns[i].style.display = '';
         });
-        updateSlider();
+        updateSliderAndScrollbar();
       }
     });
 
@@ -328,12 +458,12 @@
       } else {
         cardsToShow = 3.2;
       }
-      updateSlider();
+      updateSliderAndScrollbar();
     }
     window.addEventListener('resize', handleResize);
     handleResize();
     // Initial update
-    updateSlider();
+    updateSliderAndScrollbar();
     setupPlayButtons();
 
     // --- Generate poster from first frame of each video ---
@@ -370,4 +500,21 @@
       video.removeAttribute('poster');
       generatePosterFromFirstFrame(video, idx);
     });
+
+    // Show custom scrollbar only on mobile
+    function toggleMobileScrollbar() {
+      const scrollbar = document.querySelector('.mobile-scrollbar');
+      if (window.innerWidth <= 600) {
+        scrollbar.style.display = 'block';
+        scrollbar.style.width = '100vw';
+        scrollbar.style.height = '8px';
+        scrollbar.style.background = '#eee';
+        scrollbar.style.position = 'relative';
+        scrollbar.style.margin = '0 auto 16px auto';
+      } else {
+        scrollbar.style.display = 'none';
+      }
+    }
+    window.addEventListener('resize', toggleMobileScrollbar);
+    toggleMobileScrollbar();
   </script>
