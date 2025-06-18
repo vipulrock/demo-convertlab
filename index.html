@@ -1,114 +1,373 @@
 <style>
-    .banner-row {
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .slider-section {
+      width: 100vw;
+      min-height: 100vh;
       display: flex;
-      width: 100%;
-      height: 300px; /* Adjust as needed */
-      gap: 0;
+      flex-direction: row;
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
-    .banner {
+    .slider-left {
+      width: 30%;
+      min-width: 200px;
+      background: transparent;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 0 0 40px 40px;
+      box-sizing: border-box;
       position: relative;
-      flex: 1;
-      overflow: hidden;
+      height: 100vh;
     }
-    .banner img {
+    .slider-left h2,
+    .slider-left p {
+      display: none;
+    }
+    .slider-left-text {
+      color: #000;
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 24px;
+      margin-left: 2px;
+      letter-spacing: 0.5px;
+    }
+    .slider-controls {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      margin: 0;
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      z-index: 10;
+    }
+    .slider-btn {
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .slider-btn:active {
+      background: #222;
+    }
+    .slider-right {
+      width: 70%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      position: relative;
+      padding: 0;
+      box-sizing: border-box;
+      min-width: 0;
+      height: 100vh;
+    }
+    .video-slider {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(.77,0,.18,1);
+      will-change: transform;
+      gap: 8px;
+      padding-left: 0;
+      align-items: center;
+      height: 100vh;
+    }
+    .video-card {
+      background: #000;
+      border-radius: 0;
+      box-shadow: none;
+      overflow: hidden;
+      min-width: 320px;
+      max-width: 320px;
+      height: 570px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-card video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      aspect-ratio: 9/16;
+      background: #000;
     }
-    .banner-content {
+    .play-btn {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: #fff;
-      text-align: center;
-      background: rgba(0,0,0,0.4);
-      padding: 20px 10px;
-      border-radius: 8px;
-    }
-    .banner-title {
+      background: rgba(0,0,0,0.5);
+      border: none;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .shop-link {
       color: #fff;
-      text-decoration: underline;
-      font-size: 1rem;
-      background: rgba(0,0,0,0.2);
-      padding: 5px 10px;
-      border-radius: 4px;
+      cursor: pointer;
+      z-index: 2;
       transition: background 0.2s;
     }
-    .shop-link:hover {
-      background: #fff;
-      color: #000;
+    .play-btn:active {
+      background: #222;
     }
-    @media (max-width: 768px) {
-      .banner-row {
+    @media (max-width: 1200px) {
+      .video-card {
+        min-width: 220px;
+        max-width: 220px;
+        height: 390px;
+      }
+    }
+    @media (max-width: 900px) {
+      .slider-section {
         flex-direction: column;
+      }
+      .slider-left, .slider-right {
+        width: 100%;
+        min-width: 0;
+        padding: 0;
         height: auto;
       }
-      .banner {
-        height: 200px;
+      .slider-left-text {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+      }
+      .slider-controls {
+        position: static;
+        margin: 16px 0 0 16px;
+      }
+      .slider-right {
+        padding-top: 0;
+        height: auto;
+      }
+      .video-slider {
+        gap: 8px;
+        padding-left: 0;
+        height: auto;
+      }
+      .video-card {
+        min-width: 60vw;
+        max-width: 60vw;
+        height: 90vw;
+        max-height: 80vh;
       }
     }
-    .desktop-banner {
-      display: flex;
-    }
-    .mobile-banner {
-      display: none;
-    }
-    @media (max-width: 768px) {
-      .desktop-banner {
-        display: none;
+    @media (max-width: 600px) {
+      .video-card {
+        min-width: 90vw;
+        max-width: 90vw;
+        height: 160vw;
+        max-height: 80vh;
       }
-      .mobile-banner {
-        display: block;
-        width: 100%;
-        height: 200px;
-        position: relative;
+      .slider-left-text {
+        font-size: 1rem;
+        margin-bottom: 8px;
       }
-      .mobile-banner img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-      .mobile-banner .banner-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #fff;
-        text-align: center;
-        background: rgba(0,0,0,0.4);
-        padding: 20px 10px;
-        border-radius: 8px;
+      .slider-controls {
+        margin: 12px 0 0 12px;
       }
     }
   </style>
-  <div class="desktop-banner banner-row">
-    <div class="banner">
-      <img src="https://via.placeholder.com/600x300?text=Banner+1" alt="Collection 1">
-      <div class="banner-content">
-        <div class="banner-title">Collection One</div>
-        <a href="#" class="shop-link">Shop Now</a>
+   <section class="slider-section">
+    <div class="slider-left">
+      <div class="slider-left-text">Customer Reviews</div>
+      <div class="slider-controls">
+        <button class="slider-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+        <button class="slider-btn" id="nextBtn" aria-label="Next">&#8594;</button>
       </div>
     </div>
-    <div class="banner">
-      <img src="https://via.placeholder.com/600x300?text=Banner+2" alt="Collection 2">
-      <div class="banner-content">
-        <div class="banner-title">Collection Two</div>
-        <a href="#" class="shop-link">Shop Now</a>
+    <div class="slider-right">
+      <div class="video-slider" id="videoSlider">
+        <div class="video-card">
+          <video src="v1.mp4" preload="none" ></video>
+          <button class="play-btn" aria-label="Play">&#9658;</button>
+        </div>
+        <div class="video-card">
+          <video src="v1.mp4" preload="none" ></video>
+          <button class="play-btn" aria-label="Play">&#9658;</button>
+        </div>
+        <div class="video-card">
+          <video src="v1.mp4" preload="none" ></video>
+          <button class="play-btn" aria-label="Play">&#9658;</button>
+        </div>
+        <div class="video-card">
+          <video src="v1.mp4" preload="none" ></video>
+          <button class="play-btn" aria-label="Play">&#9658;</button>
+        </div>
+        <div class="video-card">
+          <video src="v1.mp4" preload="none" ></video>
+          <button class="play-btn" aria-label="Play">&#9658;</button>
+        </div>
+        <div class="video-card">
+          <video src="v1.mp4" preload="none" ></video>
+          <button class="play-btn" aria-label="Play">&#9658;</button>
+        </div>
+        <div class="video-card">
+          <video src="v1.mp4" preload="none" ></video>
+          <button class="play-btn" aria-label="Play">&#9658;</button>
+        </div>
+        <div class="video-card">
+          <video src="v1.mp4" preload="none" ></video>
+          <button class="play-btn" aria-label="Play">&#9658;</button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="mobile-banner">
-    <img src="https://via.placeholder.com/600x300?text=Mobile+Banner" alt="Mobile Collection">
-    <div class="banner-content">
-      <div class="banner-title">Mobile Collection</div>
-      <a href="#" class="shop-link">Shop Now</a>
-    </div>
-  </div>
+  </section>
+  <script>
+    const slider = document.getElementById('videoSlider');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let videoCards = Array.from(document.querySelectorAll('.video-card'));
+    let playBtns = Array.from(document.querySelectorAll('.play-btn'));
+    let videos = Array.from(document.querySelectorAll('.video-card video'));
+
+    let currentIndex = 0;
+    let cardsToShow = 3.2; // 3 full, 4th partial
+
+    function getGap() {
+      // Get the gap between cards from CSS
+      const style = getComputedStyle(slider);
+      return parseInt(style.gap) || 0;
+    }
+    function updateSlider() {
+      // Recalculate cardWidth in case of resize
+      const cardWidth = videoCards[0].offsetWidth + getGap();
+      const translateX = -(currentIndex * cardWidth);
+      slider.style.transform = `translateX(${translateX}px)`;
+      // Disable prev/next at bounds
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex >= videoCards.length - Math.ceil(cardsToShow);
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        // Pause all videos and show play buttons
+        videos.forEach((v, i) => {
+          if (!v.paused) v.pause();
+          playBtns[i].style.display = '';
+        });
+        updateSlider();
+      }
+    });
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < videoCards.length - Math.ceil(cardsToShow)) {
+        currentIndex++;
+        // Pause all videos and show play buttons
+        videos.forEach((v, i) => {
+          if (!v.paused) v.pause();
+          playBtns[i].style.display = '';
+        });
+        updateSlider();
+      }
+    });
+
+    // Play button logic
+    function setupPlayButtons() {
+      playBtns.forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+          // Pause all videos and show play buttons
+          videos.forEach((v, i) => {
+            if (!v.paused) v.pause();
+            playBtns[i].style.display = '';
+          });
+          // Play selected video and hide its play button
+          videos[idx].play();
+          btn.style.display = 'none';
+        });
+      });
+      // When a video ends, show its play button again
+      videos.forEach((v, idx) => {
+        v.addEventListener('ended', () => {
+          playBtns[idx].style.display = '';
+        });
+        v.addEventListener('pause', () => {
+          // Only show play button if not ended
+          if (!v.ended) playBtns[idx].style.display = '';
+        });
+        v.addEventListener('play', () => {
+          playBtns[idx].style.display = 'none';
+          // Pause all other videos
+          videos.forEach((other, i) => {
+            if (i !== idx && !other.paused) {
+              other.pause();
+              playBtns[i].style.display = '';
+            }
+          });
+        });
+      });
+      // Hide play button if video is already playing (on load)
+      videos.forEach((v, idx) => {
+        if (!v.paused) playBtns[idx].style.display = 'none';
+      });
+    }
+
+    // Responsive: update cardsToShow and slider on resize
+    function handleResize() {
+      if (window.innerWidth < 900) {
+        cardsToShow = 1.2;
+      } else {
+        cardsToShow = 3.2;
+      }
+      updateSlider();
+    }
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    // Initial update
+    updateSlider();
+    setupPlayButtons();
+
+    // --- Generate poster from first frame of each video ---
+    function generatePosterFromFirstFrame(video, idx) {
+      // Only do this if poster is not already set or is a placeholder
+      if (video.hasAttribute('data-poster-generated')) return;
+      // Temporarily load the video and seek to 0
+      video.currentTime = 0;
+      video.muted = true;
+      video.playsInline = true;
+      video.addEventListener('loadeddata', function onLoadedData() {
+        // Create a canvas to draw the frame
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        // Convert canvas to data URL
+        const dataURL = canvas.toDataURL('image/png');
+        // Set as poster
+        video.setAttribute('poster', dataURL);
+        video.setAttribute('data-poster-generated', 'true');
+        // Clean up
+        video.removeEventListener('loadeddata', onLoadedData);
+        video.pause();
+        video.currentTime = 0;
+      });
+      // Load the first frame
+      video.load();
+    }
+    // Call for all videos on page load
+    videos.forEach((video, idx) => {
+      // Remove any existing poster to force generation
+      video.removeAttribute('poster');
+      generatePosterFromFirstFrame(video, idx);
+    });
+  </script>
