@@ -1,520 +1,540 @@
+<div class="video-product-section">
+  
+  <div class="video-product-section-title-wrapper">
+      <h2 class="section-title">{{ section.settings.heading }}</h2>
+      <p class="section-sub">{{ section.settings.subheading }}</p>
+  </div>
+
+  
+  <div class="product-slider-center">
+    {% for block in section.blocks %}
+      <div class="product-card">
+        <div class="product-image">
+          <img class="product-video" src="{{ block.settings.image_url | img_url: 'master' }}" alt="Product image" width="" height="" loading="lazy">
+        </div>
+        {% assign ProductBlock = all_products[block.settings.product] %}
+        <div class="product-card-small">
+          <div class="small-card-content">
+            <div class="small-product-image">
+              <img
+                src="{{ ProductBlock.featured_image | img_url: 'master' }}"
+                alt="Product Thumbnail"
+                width="68"
+                height="84"
+              >
+            </div>
+            <div class="small-product-details">
+              <h4 class="small-product-title">
+                  <a href="{{ ProductBlock.url }}" title="{{ ProductBlock.title }}">
+                      {{ ProductBlock.title }}
+                  </a>
+              </h4>
+              <div class="small-price-wrapper">
+                {% if ProductBlock.compare_at_price > ProductBlock.price %}
+                  <span class="small-compare-price">{{ ProductBlock.compare_at_price | money }}</span>
+                {% endif %}
+                <span class="small-product-price">{{ ProductBlock.price | money }}</span>
+              </div>
+            </div>
+            <a href="{{ ProductBlock.url }}" class="add-to-cart-btn" aria-label="Add to cart">
+              {{- 'icon-plus-cart.svg' | inline_asset_content -}}
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div> 
+
 <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
+    .video-product-section {
+      padding: 60px 0;
+      background-color: {{ section.settings.bg_color }};
+      overflow: hidden;
     }
-    .slider-section {
-      width: 100vw;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: row;
-      box-sizing: border-box;
-      overflow-x: hidden;
+
+    .video-product-section-title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 6rem 1rem;
+        @media only screen and (max-width: 749px) {
+            padding: 0 6rem 2.8rem;
+            flex-direction: column;
+            gap: 0;
+        }
     }
-    .slider-left {
-      width: 30%;
-      min-width: 200px;
-      background: transparent;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: flex-start;
-      padding: 0 0 40px 40px;
-      box-sizing: border-box;
-      position: relative;
-      height: 100vh;
+
+    .video-product-section-title-wrapper .section-sub {
+        color: #000;
+        margin: 0;
+        line-height: 1;
+        @media only screen and (max-width: 749px) {
+            font-size: 13px;
+        }
     }
-    .slider-left h2,
-    .slider-left p {
-      display: none;
-    }
-    .slider-left-text {
+
+    .video-product-section .section-title {
+      font-size: 44px;
+      line-height: 1;
+      text-align: left;
+      margin-bottom: 0;
+      text-transform: uppercase;
+      margin-top: 0;
       color: #000;
-      font-size: 1.6rem;
-      font-weight: bold;
-      margin-bottom: 24px;
-      margin-left: 2px;
-      letter-spacing: 0.5px;
+      @media only screen and (max-width: 749px) {
+          font-size: 24px !important;
+          margin-bottom: 9px !important;
+          line-height: 31px !important;
+      }
     }
-    .slider-controls {
-      display: flex;
-      flex-direction: row;
-      gap: 8px;
+
+    .video-product-section .product-slider-center {
       margin: 0;
-      position: absolute;
-      bottom: 40px;
-      left: 40px;
-      z-index: 10;
-    }
-    .slider-btn {
-      background: rgba(0,0,0,0.7);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      box-shadow: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-    }
-    .slider-btn:active {
-      background: #222;
-    }
-    .slider-right {
-      width: 70%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      overflow: hidden;
-      position: relative;
       padding: 0;
-      box-sizing: border-box;
-      min-width: 0;
-      height: 100vh;
     }
-    .video-slider {
-      display: flex;
-      transition: transform 0.5s cubic-bezier(.77,0,.18,1);
-      will-change: transform;
-      gap: 8px;
-      padding-left: 0;
-      align-items: center;
-      height: 100vh;
+
+    .video-product-section .product-card {
+      padding: 0;
+      transition: all 0.5s ease;
+      border: 1px solid black;
     }
-    .video-card {
-      background: #000;
-      border-radius: 0;
-      box-shadow: none;
-      overflow: hidden;
-      min-width: 320px;
-      max-width: 320px;
-      height: 570px;
+    .video-product-section .product-slider-center .slick-slide {
+        padding: 0 5px;
+    }
+
+    .video-product-section .product-image {
       position: relative;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      margin-bottom: 0;
+    }
+
+    .video-product-section .product-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .video-product-section .product-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: #fff;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+    .video-product-section .slick-list {
+      overflow: visible;
+  }
+    .video-product-section .slick-track {
+      display: flex;
+      align-items: center;
+  }
+    .video-product-section .slick-center {
+        z-index: 2;
+    }
+    
+    .video-product-section .product-title {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .video-product-section .price-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .video-product-section .compare-price {
+      font-size: 1.4rem;
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    .video-product-section .product-price {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .video-product-section .slick-current {
+      z-index: 2;
+    }
+
+    .video-product-section .slick-current .product-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+ 
+
+    
+
+    .video-product-section .product-card-small {
+        position: relative;
+        background: #fff;
+        padding: 6px 17px 6px 6px;
+        margin-top: 0;
+        box-shadow: none;
+        transition: all 0.3s ease;
+    }
+
+    .video-product-section .small-card-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .video-product-section .small-product-image {
+      width: 68px;
+      height: 84px;
+    }
+
+    .video-product-section .small-product-image img {
+        width: auto;
+        height: 100%;
+    }
+
+    .video-product-section .small-product-details {
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .video-product-section .small-product-title {
+        font-size: 1.4rem;
+        font-weight: 400;
+        margin: 0 0 7px;
+        font-family: 'Helvetica';
+        line-height: normal;
+    }
+
+    .video-product-section .small-product-title a {
+        color: #000;
+        text-decoration: none;
+    }
+
+    .video-product-section .small-price-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .video-product-section .small-compare-price {
+      font-size: 1.4rem;
+      color: #989898;
+      text-decoration: line-through;
+      line-height: 21px;
+    }
+
+    .video-product-section .small-product-price {
+        font-size: 1.4rem;
+        color: #000;
+        line-height: normal;
+    }
+
+    .video-product-section .add-to-cart-btn {
+      border-radius: 50%;
+      background: #fff;
+      border: none;
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+      padding: 0;
     }
-    .video-card video {
+
+    .video-product-section .slick-slide {
+        transition: all 0.3s ease;
+    }
+
+    .video-product-section .product-video {
       width: 100%;
       height: 100%;
+      transition: all 0.5s ease 0s;
       object-fit: cover;
       display: block;
-      aspect-ratio: 9/16;
-      background: #000;
     }
-    .play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.5);
-      border: none;
-      border-radius: 50%;
-      width: 56px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: #fff;
-      cursor: pointer;
-      z-index: 2;
-      transition: background 0.2s;
+
+    .video-product-section .slick-current img.product-video {
+        height: 710px;        
     }
-    .play-btn:active {
-      background: #222;
-    }
-    @media (max-width: 1200px) {
-      .video-card {
-        min-width: 220px;
-        max-width: 220px;
-        height: 390px;
+  
+    .video-product-section .slick-center .small-product-image {
+        width: 68px;
+        height: 84px;
+  }
+ 
+
+    @media screen and (max-width: 767px) {
+      .video-product-section .section-title {
+          font-size: 26px;
+          margin-bottom: 42px;
+          line-height: 31px;
       }
-    }
-    @media (max-width: 900px) {
-      .slider-section {
-        flex-direction: column;
+      .video-product-section .product-video {
+        max-height: 350px;
       }
-      .slider-left, .slider-right {
-        width: 100%;
-        min-width: 0;
-        padding: 0;
-        height: auto;
+      .video-product-section .slick-center .product-image .product-video {
+          max-height: 470px;
       }
-      .slider-left-text {
+      .video-product-section .product-title {
+        font-size: 1.4rem;
+      }
+
+      .video-product-section .compare-price {
         font-size: 1.2rem;
-        margin-bottom: 12px;
       }
-      .slider-controls {
-        position: static;
-        margin: 16px 0 0 16px;
+
+      .video-product-section .product-price {
+        font-size: 1.6rem;
       }
-      .slider-right {
-        padding-top: 0;
-        height: auto;
+
+
+      .video-product-section {
+          padding: 36px 0 50px;
+          margin-bottom: 0;
       }
-      .video-slider {
-        gap: 8px;
-        padding-left: 0;
-        height: auto;
+       
+      .video-product-section .product-card-small {
+    margin-top: 0;
+}
+      .video-product-section .product-card-small {
+    margin-top: 0;
+    padding: 4px 7px 4px 4px;
+}
+      .video-product-section .slick-center .small-product-image {
+    width: 52px;
+    height: 64px;
+}
+      .video-product-section .small-card-content {
+        gap : 8px;
       }
-      .video-card {
-        min-width: 60vw;
-        max-width: 60vw;
-        height: 90vw;
-        max-height: 80vh;
-      }
-    }
-    @media (max-width: 600px) {
-      .slider-section {
-        flex-direction: column;
-      }
-      .slider-left {
-        width: 100%;
-        min-width: 0;
-        padding: 16px 10px 0 10px;
-        height: auto;
-        justify-content: flex-start;
-        align-items: flex-start;
-      }
-      .slider-left-text {
-        font-size: 1rem;
-        margin-bottom: 8px;
-        color: #000;
-        display: block;
-      }
-      .slider-controls {
-        display: none !important;
-      }
-      .slider-right {
-        width: 100%;
-        min-width: 0;
+      .video-product-section .small-product-title {
+    font-size: 11px;
+    line-height: 16px;
+        margin-bottom: 3px;
+}
+      .video-product-section .small-product-price,
+      .video-product-section .small-compare-price{
+    font-size: 10px;
+    line-height: 15px;
+}
+      .video-product-section .product-card {
         padding: 0;
-        height: auto;
-        justify-content: center;
-        align-items: center;
       }
-      .video-slider-wrapper {
-        width: 100vw;
-        overflow: hidden;
-        position: relative;
-        margin: 0 auto;
-      }
-      .video-slider {
-        display: flex;
-        gap: 8px;
-        height: auto;
-        transition: transform 0.5s cubic-bezier(.77,0,.18,1);
-        will-change: transform;
-        scroll-snap-type: none;
-      }
-      .video-card {
-        min-width: 80vw;
-        max-width: 80vw;
-        height: 140vw;
-        max-height: 70vh;
-        margin: 0;
-        scroll-snap-align: center;
-      }
-      .video-slider-scrollbar {
-        width: 100vw;
-        height: 6px;
-        background: gray;
-        border-radius: 3px;
-        margin: 8px 0 0 0;
-        position: relative;
-        overflow: hidden;
-        display: block;
-      }
-      .video-slider-scrollbar-thumb {
-        height: 100%;
-        background: #000;
-        border-radius: 3px;
-        position: absolute;
-        left: 0;
-        top: 0;
-        transition: left 0.3s;
-      }
-    }
-    /* Custom scrollbar for mobile */
-    @media (max-width: 600px) {
-      .video-slider::-webkit-scrollbar {
-        height: 8px;
-      }
-      .video-slider::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 4px;
-      }
-      .video-slider::-webkit-scrollbar-track {
-        background: #eee;
-        border-radius: 4px;
-      }
-    }
-  </style>
-  <section class="slider-section">
-    <div class="slider-left">
-      <div class="slider-left-text">Customer Reviews</div>
-      <div class="slider-controls">
-        <button class="slider-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
-        <button class="slider-btn" id="nextBtn" aria-label="Next">&#8594;</button>
-      </div>
-    </div>
-    <div class="slider-right">
-      <div class="video-slider-wrapper">
-        <div class="video-slider" id="videoSlider">
-          <div class="video-card">
-            <video src="v1.mp4" preload="none" ></video>
-            <button class="play-btn" aria-label="Play">&#9658;</button>
-          </div>
-          <div class="video-card">
-            <video src="v1.mp4" preload="none" ></video>
-            <button class="play-btn" aria-label="Play">&#9658;</button>
-          </div>
-          <div class="video-card">
-            <video src="v1.mp4" preload="none" ></video>
-            <button class="play-btn" aria-label="Play">&#9658;</button>
-          </div>
-          <div class="video-card">
-            <video src="v1.mp4" preload="none" ></video>
-            <button class="play-btn" aria-label="Play">&#9658;</button>
-          </div>
-          <div class="video-card">
-            <video src="v1.mp4" preload="none" ></video>
-            <button class="play-btn" aria-label="Play">&#9658;</button>
-          </div>
-          <div class="video-card">
-            <video src="v1.mp4" preload="none" ></video>
-            <button class="play-btn" aria-label="Play">&#9658;</button>
-          </div>
-          <div class="video-card">
-            <video src="v1.mp4" preload="none" ></video>
-            <button class="play-btn" aria-label="Play">&#9658;</button>
-          </div>
-          <div class="video-card">
-            <video src="v1.mp4" preload="none" ></video>
-            <button class="play-btn" aria-label="Play">&#9658;</button>
-          </div>
-        </div>
-        <div class="video-slider-scrollbar" id="videoSliderScrollbar" style="display:none;">
-          <div class="video-slider-scrollbar-thumb" id="videoSliderScrollbarThumb"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- Mobile: Scrollbar below slider -->
-  <div class="mobile-scrollbar" style="display:none;"></div>
-  <script>
-    const slider = document.getElementById('videoSlider');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    let videoCards = Array.from(document.querySelectorAll('.video-card'));
-    let playBtns = Array.from(document.querySelectorAll('.play-btn'));
-    let videos = Array.from(document.querySelectorAll('.video-card video'));
-
-    let currentIndex = 0;
-    let cardsToShow = 3.2; // 3 full, 4th partial
-
-    function getGap() {
-      // Get the gap between cards from CSS
-      const style = getComputedStyle(slider);
-      return parseInt(style.gap) || 0;
-    }
-    function updateSlider() {
-      const isMobile = window.innerWidth <= 600;
-      const cardWidth = videoCards[0].offsetWidth + getGap();
-      if (isMobile) {
-        // Center the active card, show 10% of prev/next
-        const offset = (window.innerWidth - videoCards[0].offsetWidth) / 2;
-        slider.style.transform = `translateX(${-currentIndex * cardWidth + offset}px)`;
-      } else {
-        const translateX = -(currentIndex * cardWidth);
-        slider.style.transform = `translateX(${translateX}px)`;
-      }
-      // No disabling of arrows for infinite
     }
 
-    function updateMobileScrollbar() {
-      const scrollbar = document.getElementById('videoSliderScrollbar');
-      const thumb = document.getElementById('videoSliderScrollbarThumb');
-      if (window.innerWidth > 600) {
-        scrollbar.style.display = 'none';
-        return;
+  @media only screen and (max-width: 1600px) {
+      .video-product-section .slick-current img.product-video {
+          height: 600px;
       }
-      scrollbar.style.display = 'block';
-      const total = videoCards.length;
-      const visible = 1; // 1 card visible at a time
-      const percent = visible / total;
-      const thumbWidth = percent * scrollbar.offsetWidth;
-      thumb.style.width = thumbWidth + 'px';
-      // Calculate left position
-      const maxIndex = total;
-      const left = (currentIndex / maxIndex) * (scrollbar.offsetWidth - thumbWidth);
-      thumb.style.left = left + 'px';
-    }
-    // Call updateMobileScrollbar on slide change and resize
-    function updateSliderAndScrollbar() {
-      updateSlider();
-      updateMobileScrollbar();
-    }
+  }
 
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + videoCards.length) % videoCards.length;
-      videos.forEach((v, i) => {
-        if (!v.paused) v.pause();
-        playBtns[i].style.display = '';
-      });
-      updateSliderAndScrollbar();
-    });
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % videoCards.length;
-      videos.forEach((v, i) => {
-        if (!v.paused) v.pause();
-        playBtns[i].style.display = '';
-      });
-      updateSliderAndScrollbar();
+  @media only screen and (max-width: 1440px) {
+      .video-product-section .slick-current img.product-video {
+          height: 500px;
+      }
+  }
+
+  @media only screen and (max-width: 1380px) {
+      .video-product-section .slick-current img.product-video {
+          height: 450px;
+      }
+  }
+
+  @media only screen and (max-width: 1300px) {
+      .video-product-section .slick-current img.product-video {
+          height: 440px;
+      }
+  }
+
+  @media only screen and (max-width: 1200px) {
+      .video-product-section .slick-current img.product-video {
+          height: 350px;
+      }
+  }
+
+  @media only screen and (max-width: 1024px) {
+      .video-product-section .slick-current img.product-video {
+          height: 510px;
+      }
+  }
+
+
+  @media only screen and (max-width: 920px) {
+    .video-product-section .slick-current img.product-video {
+      height: 1200px;
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    .video-product-section .slick-current img.product-video {
+      height: 390px;
+    }
+  }
+
+  @media only screen and (max-width: 749px) {
+      .video-product-section .slick-dots {
+          position: relative;
+          bottom: 0;
+          margin-top: 20px;
+          li {
+              width: auto;
+              height: auto;
+              margin: 0;
+              button {
+                  padding: 0;
+                  height: 2px;
+                  width: 50px;
+                  background: #C5C5C5;
+                  &:before {
+                      display: none;
+                  }
+              }
+              &.slick-active {
+                  button {
+                      background: #000000;
+                  }
+              }
+          }
+      }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    // Initialize Slick
+    jQuery('.product-slider-center').slick({
+      centerMode: true,
+      centerPadding: '350px',
+      slidesToShow: {{ section.settings.slide_show_desktop }},
+      speed: 100,
+      autoplay: false,
+      autoplaySpeed: 1500,
+      arrows: false,
+      dots: false,
+      responsive: [
+        {
+          breakpoint: 1600,
+          settings: {
+            centerPadding: '275px',
+            slidesToShow: {{ section.settings.slide_show_desktop }},
+          },
+        },
+        {
+          breakpoint: 1300,
+          settings: {
+            centerPadding: '220px',
+            slidesToShow: {{ section.settings.slide_show_desktop }},
+          },
+        },
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            centerPadding: '60px',
+          },
+        },
+        {
+          breakpoint: 920,
+          settings: {
+            slidesToShow: {{ section.settings.slide_show_mobile }},
+            centerPadding: '100px',
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: {{ section.settings.slide_show_mobile }},
+            centerPadding: '100px',
+            dots: true
+          },
+        },
+        {
+          breakpoint: 640,
+          settings: {
+            slidesToShow: {{ section.settings.slide_show_mobile }},
+            centerPadding: '80px',
+            dots: true
+          },
+        },
+      ],
     });
 
-    // Mobile: swipe support for infinite scroll
-    let startX = 0;
-    let isDragging = false;
-    slider.addEventListener('touchstart', (e) => {
-      if (window.innerWidth > 600) return;
-      isDragging = true;
-      startX = e.touches[0].clientX;
-    });
-    slider.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      // Optionally, implement drag effect
-    });
-    slider.addEventListener('touchend', (e) => {
-      if (window.innerWidth > 600) return;
-      isDragging = false;
-      const endX = e.changedTouches[0].clientX;
-      const diff = endX - startX;
-      if (Math.abs(diff) > 50) {
-        if (diff < 0) {
-          currentIndex = (currentIndex + 1) % videoCards.length;
-        } else {
-          currentIndex = (currentIndex - 1 + videoCards.length) % videoCards.length;
+  });
+</script>
+
+
+{% schema %}
+{
+  "name": "Inspired CTM",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Sub Heading"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color"
+    },
+    {
+      "type": "range",
+      "id": "slide_show_desktop",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 3,
+      "label": "Slide Show for Desktop"
+    },
+    {
+      "type": "range",
+      "id": "slide_show_mobile",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 1,
+      "label": "Slide Show for Mobile"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_section",
+      "name": "Add Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_url",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
         }
-        videos.forEach((v, i) => {
-          if (!v.paused) v.pause();
-          playBtns[i].style.display = '';
-        });
-        updateSliderAndScrollbar();
-      }
-    });
-
-    // Play button logic
-    function setupPlayButtons() {
-      playBtns.forEach((btn, idx) => {
-        btn.addEventListener('click', () => {
-          // Pause all videos and show play buttons
-          videos.forEach((v, i) => {
-            if (!v.paused) v.pause();
-            playBtns[i].style.display = '';
-          });
-          // Play selected video and hide its play button
-          videos[idx].play();
-          btn.style.display = 'none';
-        });
-      });
-      // When a video ends, show its play button again
-      videos.forEach((v, idx) => {
-        v.addEventListener('ended', () => {
-          playBtns[idx].style.display = '';
-        });
-        v.addEventListener('pause', () => {
-          // Only show play button if not ended
-          if (!v.ended) playBtns[idx].style.display = '';
-        });
-        v.addEventListener('play', () => {
-          playBtns[idx].style.display = 'none';
-          // Pause all other videos
-          videos.forEach((other, i) => {
-            if (i !== idx && !other.paused) {
-              other.pause();
-              playBtns[i].style.display = '';
-            }
-          });
-        });
-      });
-      // Hide play button if video is already playing (on load)
-      videos.forEach((v, idx) => {
-        if (!v.paused) playBtns[idx].style.display = 'none';
-      });
+      ]
     }
-
-    // Responsive: update cardsToShow and slider on resize
-    function handleResize() {
-      if (window.innerWidth < 900) {
-        cardsToShow = 1.2;
-      } else {
-        cardsToShow = 3.2;
-      }
-      updateSliderAndScrollbar();
+  ],
+  "presets": [
+    {
+      "name": "Inspired CTM"
     }
-    window.addEventListener('resize', handleResize);
-    handleResize();
-    // Initial update
-    updateSliderAndScrollbar();
-    setupPlayButtons();
-
-    // --- Generate poster from first frame of each video ---
-    function generatePosterFromFirstFrame(video, idx) {
-      // Only do this if poster is not already set or is a placeholder
-      if (video.hasAttribute('data-poster-generated')) return;
-      // Temporarily load the video and seek to 0
-      video.currentTime = 0;
-      video.muted = true;
-      video.playsInline = true;
-      video.addEventListener('loadeddata', function onLoadedData() {
-        // Create a canvas to draw the frame
-        const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        // Convert canvas to data URL
-        const dataURL = canvas.toDataURL('image/png');
-        // Set as poster
-        video.setAttribute('poster', dataURL);
-        video.setAttribute('data-poster-generated', 'true');
-        // Clean up
-        video.removeEventListener('loadeddata', onLoadedData);
-        video.pause();
-        video.currentTime = 0;
-      });
-      // Load the first frame
-      video.load();
-    }
-    // Call for all videos on page load
-    videos.forEach((video, idx) => {
-      // Remove any existing poster to force generation
-      video.removeAttribute('poster');
-      generatePosterFromFirstFrame(video, idx);
-    });
-
-    // Show custom scrollbar only on mobile
-    function toggleMobileScrollbar() {
-      const scrollbar = document.querySelector('.mobile-scrollbar');
-      if (window.innerWidth <= 600) {
-        scrollbar.style.display = 'block';
-        scrollbar.style.width = '100vw';
-        scrollbar.style.height = '8px';
-        scrollbar.style.background = '#eee';
-        scrollbar.style.position = 'relative';
-        scrollbar.style.margin = '0 auto 16px auto';
-      } else {
-        scrollbar.style.display = 'none';
-      }
-    }
-    window.addEventListener('resize', toggleMobileScrollbar);
-    toggleMobileScrollbar();
-  </script>
+  ]
+}
+{% endschema %}
