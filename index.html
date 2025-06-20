@@ -23,13 +23,9 @@
               <path class="sound-wave" d="M19.07 4.93C20.9447 6.80528 21.9979 9.34836 22 12C22 14.6522 20.9464 17.1957 19.07 19.07M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 12C17.0039 13.3308 16.4774 14.6024 15.54 15.54" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          <button class="video-play-pause" aria-label="Play/Pause video" style="position:absolute; bottom:20px; left:20px; width:40px; height:40px; border-radius:50%; background:none; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:3; transition:all 0.3s ease;">
-            <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <button class="video-play-btn" aria-label="Play video" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:56px; height:56px; border-radius:50%; background:rgba(0,0,0,0.5); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:4; transition:all 0.3s ease;">
+            <svg class="play-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <polygon points="6,4 20,12 6,20" fill="white"/>
-            </svg>
-            <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none;">
-              <rect x="6" y="4" width="4" height="16" fill="white"/>
-              <rect x="14" y="4" width="4" height="16" fill="white"/>
             </svg>
           </button>
           <button class="zoom-btn" aria-label="Zoom video">
@@ -666,39 +662,36 @@
       }
     });
 
-    // Video play/pause control
-    cards.forEach((card) => {
+    // Video play control (center play button, only one video at a time)
+    const allVideos = document.querySelectorAll('.product-video');
+    const allPlayBtns = document.querySelectorAll('.video-play-btn');
+    allPlayBtns.forEach((playBtn, idx) => {
+      const card = playBtn.closest('.product-card');
       const video = card.querySelector('.product-video');
-      const playPauseBtn = card.querySelector('.video-play-pause');
-      const playIcon = playPauseBtn.querySelector('.play-icon');
-      const pauseIcon = playPauseBtn.querySelector('.pause-icon');
+      const playIcon = playBtn.querySelector('.play-icon');
 
-      // Set initial state
-      playIcon.style.display = video.paused ? 'block' : 'none';
-      pauseIcon.style.display = video.paused ? 'none' : 'block';
+      // Show play icon if paused, hide if playing
+      function updatePlayIcon() {
+        playBtn.style.display = video.paused ? 'flex' : 'none';
+      }
+      updatePlayIcon();
 
-      playPauseBtn.addEventListener('click', (e) => {
+      playBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if (video.paused) {
-          video.play();
-          playIcon.style.display = 'none';
-          pauseIcon.style.display = 'block';
-        } else {
-          video.pause();
-          playIcon.style.display = 'block';
-          pauseIcon.style.display = 'none';
-        }
+        // Pause all other videos
+        allVideos.forEach((v, vIdx) => {
+          if (v !== video) {
+            v.pause();
+          }
+        });
+        video.play();
+        updatePlayIcon();
       });
-
-      // Update icons if user uses native controls or other triggers
-      video.addEventListener('play', () => {
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'block';
-      });
-      video.addEventListener('pause', () => {
-        playIcon.style.display = 'block';
-        pauseIcon.style.display = 'none';
-      });
+      // Hide play icon when playing, show when paused
+      video.addEventListener('play', updatePlayIcon);
+      video.addEventListener('pause', updatePlayIcon);
+      // Also update on ended
+      video.addEventListener('ended', updatePlayIcon);
     });
 
     // Video popup functionality
