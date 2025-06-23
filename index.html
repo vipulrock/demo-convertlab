@@ -9,30 +9,8 @@
   <div class="product-slider-center">
     {% for block in section.blocks %}
       <div class="product-card">
-        <div class="product-image video-wrapper" style="position:relative;">
-          
-          <video class="product-video" loop muted playsinline>
-            <source src="{{ block.settings.video_url }}" type="video/mp4">
-          </video>
-          <button class="video-control" aria-label="Toggle sound">
-            <svg class="mute-icon" width="21" height="17" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M11.0536 1.00739C11.2434 1.09699 11.4048 1.23735 11.5198 1.41295C11.6349 1.58855 11.6992 1.79254 11.7055 2.00238V15.1676C11.7055 15.613 11.4307 15.9902 11.0553 16.195C10.857 16.2813 10.6379 16.3079 10.4248 16.2715C10.2117 16.2351 10.0139 16.1374 9.85548 15.9902L5.22359 11.8737H2.92642C2.63711 11.8776 2.34996 11.8235 2.08192 11.7146C1.81387 11.6057 1.57037 11.4442 1.36578 11.2396C1.1612 11.035 0.999676 10.7915 0.89076 10.5235C0.781844 10.2554 0.72774 9.96827 0.731642 9.67896V7.48419C0.731642 6.2844 1.69079 5.28942 2.92642 5.28942H5.22359L9.85378 1.21219C10.0121 1.06502 10.21 0.967258 10.4231 0.930881C10.6362 0.894503 10.8553 0.921092 11.0536 1.00739ZM15.3066 5.53176L17.1924 7.41934L19.0783 5.53176C19.3855 5.22456 19.9026 5.22456 20.2098 5.53176C20.5529 5.8748 20.5529 6.38851 20.2098 6.69742L18.324 8.58499L20.2115 10.4691C20.5546 10.8122 20.5546 11.3259 20.2115 11.6348C20.1411 11.7156 20.0541 11.7803 19.9565 11.8247C19.8589 11.869 19.753 11.892 19.6458 11.892C19.5386 11.892 19.4326 11.869 19.335 11.8247C19.2375 11.7803 19.1505 11.7156 19.08 11.6348L17.1924 9.74894L15.3083 11.6365C14.9652 11.9795 14.4515 11.9795 14.1426 11.6365C13.7996 11.3259 13.7996 10.8122 14.1426 10.4691L16.0285 8.58328L14.1375 6.69912C13.7962 6.39192 13.7962 5.87651 14.1375 5.53347C14.4481 5.22627 14.9618 5.22627 15.3049 5.53347L15.3066 5.53176Z" fill="white"/>
-            </svg>
-            <svg class="unmute-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path class="sound-wave" d="M19.07 4.93C20.9447 6.80528 21.9979 9.34836 22 12C22 14.6522 20.9464 17.1957 19.07 19.07M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 12C17.0039 13.3308 16.4774 14.6024 15.54 15.54" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button class="video-play-btn" aria-label="Play video" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:56px; height:56px; border-radius:50%; background:rgba(0,0,0,0.5); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:4; transition:all 0.3s ease;">
-            <svg class="play-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="6,4 20,12 6,20" fill="white"/>
-            </svg>
-          </button>
-          <button class="zoom-btn" aria-label="Zoom video">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 3H21V9M9 21H3V15M21 3L14 10M3 21L10 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
+        <div class="product-image">
+          <img class="product-video" src="{{ block.settings.image_url | img_url: 'master' }}" alt="Product image" width="" height="" loading="lazy">
         </div>
         {% assign ProductBlock = all_products[block.settings.product] %}
         <div class="product-card-small">
@@ -67,19 +45,6 @@
     {% endfor %}
   </div>
 </div> 
-
-<div class="video-popup">
-  <div class="popup-content">
-    <button class="popup-close">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <video class="popup-video" loop muted playsinline>
-      <source src="" type="video/mp4">
-    </video>
-  </div>
-</div>
 
 <style>
     .video-product-section {
@@ -125,112 +90,91 @@
     }
 
     .video-product-section .product-slider-center {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      justify-content: center;
+      margin: 0;
+      padding: 0;
     }
 
     .video-product-section .product-card {
-      flex: 1 1 300px;
-      max-width: 350px;
-      min-width: 250px;
-      box-sizing: border-box;
-      margin: 0 8px;
-      border: 1px solid black;
       padding: 0;
       transition: all 0.5s ease;
-      background: #fff;
-      position: relative;
-      display: flex;
-      flex-direction: column;
+      border: 1px solid black;
     }
-    .video-product-section .product-image.video-wrapper {
+    .video-product-section .product-slider-center .slick-slide {
+        padding: 0 5px;
+    }
+
+    .video-product-section .product-image {
       position: relative;
-      width: 100%;
-      aspect-ratio: 9/16;
-      background: #000;
       overflow: hidden;
+      transition: all 0.5s ease;
+      margin-bottom: 0;
     }
-    .video-product-section .product-video {
+
+    .video-product-section .product-image img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
       display: block;
-      background: #000;
+      transition: transform 0.5s ease;
     }
-   .video-product-section .video-control {
+
+    .video-product-section .product-info {
       position: absolute;
-      bottom: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: none;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 3;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: #fff;
+      opacity: 0;
+      transform: translateY(20px);
       transition: all 0.3s ease;
     }
-
-    .video-product-section .video-control:hover {
-      background: none;
-      transform: scale(1.1);
-    }
-
-    .video-product-section .video-control svg {
-      width: 24px;
-      height: 24px;
-      color: #000;
-    }
-    .video-product-section .video-play-pause,
-    .video-product-section .video-mute-unmute,
-    .video-product-section .video-popup-open {
-      outline: none;
-    }
-    .video-popup-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.8);
-      z-index: 9999;
+    .video-product-section .slick-list {
+      overflow: visible;
+  }
+    .video-product-section .slick-track {
+      display: flex;
       align-items: center;
-      justify-content: center;
+  }
+    .video-product-section .slick-center {
+        z-index: 2;
     }
-    .video-popup-overlay.active {
-      display: flex !important;
+    
+    .video-product-section .product-title {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 10px;
     }
-    .video-popup-content {
-      position: relative;
-      max-width: 90vw;
-      max-height: 90vh;
+
+    .video-product-section .price-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .video-popup-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: none;
-      border: none;
+
+    .video-product-section .compare-price {
+      font-size: 1.4rem;
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    .video-product-section .product-price {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .video-product-section .slick-current {
       z-index: 2;
-      cursor: pointer;
-      font-size: 2rem;
-      color: #fff;
     }
-    .video-popup-video {
-      max-width: 100%;
-      max-height: 80vh;
-      display: block;
-      background: #000;
+
+    .video-product-section .slick-current .product-info {
+      opacity: 1;
+      transform: translateY(0);
     }
-    @media (max-width: 1024px) {
-      .video-product-section .product-card {
-        max-width: 90vw;
-      }
-    }
+
+ 
+
+    
 
     .video-product-section .product-card-small {
         position: relative;
@@ -312,14 +256,23 @@
         transition: all 0.3s ease;
     }
 
-    .video-product-section .slick-current {
-      z-index: 2;
+    .video-product-section .product-video {
+      width: 100%;
+      height: 100%;
+      transition: all 0.5s ease 0s;
+      object-fit: cover;
+      display: block;
     }
 
-    .video-product-section .slick-current .product-info {
-      opacity: 1;
-      transform: translateY(0);
+    .video-product-section .slick-current img.product-video {
+        height: 710px;        
     }
+  
+    .video-product-section .slick-center .small-product-image {
+        width: 68px;
+        height: 84px;
+  }
+ 
 
     @media screen and (max-width: 767px) {
       .video-product-section .section-title {
@@ -455,138 +408,14 @@
           }
       }
   }
-
-  .zoom-btn {
-  position: absolute;
-  top: 15px;
-  right: 14px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 3;
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-
-.slick-center .zoom-btn {
-  opacity: 1;
-}
-
-.zoom-btn:hover {
-  transform: scale(1.1);
-  background: rgba(0, 0, 0, 0.7);
-}
-
-.zoom-btn svg {
-  width: 24px;
-  height: 24px;
-}
-
-.video-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 999999;
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
-
-.video-popup.active {
-  display: flex;
-}
-
-.popup-content {
-  position: relative;
-  width: 90%;
-  height: 90%;
-  max-width: 1200px;
-}
-
-.popup-video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.popup-close {
-  position: absolute;
-  top: -40px;
-  right: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.popup-close:hover {
-  transform: scale(1.1);
-  background: rgba(0, 0, 0, 0.7);
-}
-
-.popup-close svg {
-  width: 24px;
-  height: 24px;
-}
-
-@media screen and (max-width: 767px) {
-  .zoom-btn {
-    width: 36px;
-    height: 36px;
-    top: 15px;
-    right: 15px;
-  }
-
-  .zoom-btn svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .popup-close {
-    width: 36px;
-    height: 36px;
-    top: -36px;
-  }
-
-  .popup-close svg {
-    width: 20px;
-    height: 20px;
-  }
-}
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-  // Fix: Ensure videos inside Slick load correctly on init
-    jQuery('.product-slider-center').on('init', function (event, slick) {
-      const videos = document.querySelectorAll('.product-video');
-      videos.forEach(video => {
-        video.load(); // Force rendering of video
-      });
 
-      // Trigger resize to force repaint (especially on Safari)
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-      }, 100);
-    });
     // Initialize Slick
     jQuery('.product-slider-center').slick({
-      centerMode: false,
+      centerMode: true,
       centerPadding: '350px',
       slidesToShow: {{ section.settings.slide_show_desktop }},
       speed: 100,
@@ -641,155 +470,6 @@
         },
       ],
     });
- // Video mute/unmute control
-    const cards = document.querySelectorAll('.product-card');
-    cards.forEach((card) => {
-      const video = card.querySelector('.product-video');
-      const muteControl = card.querySelector('.video-control');
-      const muteIcon = card.querySelector('.mute-icon');
-      const unmuteIcon = card.querySelector('.unmute-icon');
 
-      if (muteControl) {
-        muteIcon.style.display = video.muted ? 'block' : 'none';
-        unmuteIcon.style.display = video.muted ? 'none' : 'block';
-
-        muteControl.addEventListener('click', (e) => {
-          e.preventDefault();
-          video.muted = !video.muted;
-          muteIcon.style.display = video.muted ? 'block' : 'none';
-          unmuteIcon.style.display = video.muted ? 'none' : 'block';
-        });
-      }
-    });
-
-    // Video play control (center play button, only one video at a time)
-    const allVideos = document.querySelectorAll('.product-video');
-    const allPlayBtns = document.querySelectorAll('.video-play-btn');
-    allPlayBtns.forEach((playBtn, idx) => {
-      const card = playBtn.closest('.product-card');
-      const video = card.querySelector('.product-video');
-      const playIcon = playBtn.querySelector('.play-icon');
-
-      // Show play icon if paused, hide if playing
-      function updatePlayIcon() {
-        playBtn.style.display = video.paused ? 'flex' : 'none';
-      }
-      updatePlayIcon();
-
-      playBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        // Pause all other videos
-        allVideos.forEach((v, vIdx) => {
-          if (v !== video) {
-            v.pause();
-          }
-        });
-        video.play();
-        updatePlayIcon();
-      });
-      // Hide play icon when playing, show when paused
-      video.addEventListener('play', updatePlayIcon);
-      video.addEventListener('pause', updatePlayIcon);
-      // Also update on ended
-      video.addEventListener('ended', updatePlayIcon);
-    });
-
-    // Video popup functionality
-    const popup = document.querySelector('.video-popup');
-    const popupVideo = popup.querySelector('.popup-video');
-    const closeBtn = popup.querySelector('.popup-close');
-
-    document.addEventListener('click', function (e) {
-      if (e.target.closest('.zoom-btn')) {
-        const card = e.target.closest('.product-card');
-        const video = card.querySelector('.product-video');
-        const videoSource = video.querySelector('source').src;
-
-        popupVideo.querySelector('source').src = videoSource;
-        popupVideo.load();
-        popupVideo.play();
-        popup.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
-    });
-
-    closeBtn.addEventListener('click', function () {
-      popupVideo.pause();
-      popup.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && popup.classList.contains('active')) {
-        popupVideo.pause();
-        popup.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    });
   });
 </script>
-
-{% schema %}
-{
-  "name": "Inspired CTM",
-  "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading"
-    },
-    {
-      "type": "text",
-      "id": "subheading",
-      "label": "Sub Heading"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color"
-    },
-    {
-      "type": "range",
-      "id": "slide_show_desktop",
-      "min": 3,
-      "max": 12,
-      "step": 1,
-      "default": 3,
-      "label": "Slide Show for Desktop"
-    },
-    {
-      "type": "range",
-      "id": "slide_show_mobile",
-      "min": 1,
-      "max": 12,
-      "step": 1,
-      "default": 1,
-      "label": "Slide Show for Mobile"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "video_section",
-      "name": "Add Image",
-      "settings": [
-        {
-          "type": "url",
-          "id": "video_url",
-          "label": "Video URL",
-          "info": "Upload the video in backend files option and use that URL over here"
-        },
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Select Product"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Inspired CTM"
-    }
-  ]
-}
-{% endschema %}
