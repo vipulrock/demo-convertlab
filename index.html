@@ -1,484 +1,527 @@
 <div class="video-product-section">
   
-  <div class="video-product-section-title-wrapper">
-      <h2 class="section-title">{{ section.settings.heading }}</h2>
-      <p class="section-sub">{{ section.settings.subheading }}</p>
-  </div>
-
+    <div class="video-product-section-title-wrapper">
+        <h2 class="section-title">{{ section.settings.heading }}</h2>
+        <p class="section-sub">{{ section.settings.subheading }}</p>
+    </div>
   
-  <div class="product-slider-center">
-    {% for block in section.blocks %}
-      <div class="product-card">
-        <div class="product-image">
-          <img class="product-video" src="{{ block.settings.image_url | img_url: 'master' }}" alt="Product image" width="" height="" loading="lazy">
-        </div>
-        {% assign ProductBlock = all_products[block.settings.product] %}
-        <div class="product-card-small">
-          <div class="small-card-content">
-            <div class="small-product-image">
-              <img
-                src="{{ ProductBlock.featured_image | img_url: 'master' }}"
-                alt="Product Thumbnail"
-                width="68"
-                height="84"
-              >
-            </div>
-            <div class="small-product-details">
-              <h4 class="small-product-title">
-                  <a href="{{ ProductBlock.url }}" title="{{ ProductBlock.title }}">
-                      {{ ProductBlock.title }}
-                  </a>
-              </h4>
-              <div class="small-price-wrapper">
-                {% if ProductBlock.compare_at_price > ProductBlock.price %}
-                  <span class="small-compare-price">{{ ProductBlock.compare_at_price | money }}</span>
-                {% endif %}
-                <span class="small-product-price">{{ ProductBlock.price | money }}</span>
+    
+    <div class="product-slider-center">
+      {% for block in section.blocks %}
+        <div class="product-card">
+          <div class="product-image">
+            <img class="product-video" src="{{ block.settings.image_url | img_url: 'master' }}" alt="Product image" width="" height="" loading="lazy">
+          </div>
+          {% assign ProductBlock = all_products[block.settings.product] %}
+          <div class="product-card-small">
+            <div class="small-card-content">
+              <div class="small-product-image">
+                <img
+                  src="{{ ProductBlock.featured_image | img_url: 'master' }}"
+                  alt="Product Thumbnail"
+                  width="68"
+                  height="84"
+                >
               </div>
+              <div class="small-product-details">
+                <h4 class="small-product-title">
+                    <a href="{{ ProductBlock.url }}" title="{{ ProductBlock.title }}">
+                        {{ ProductBlock.title }}
+                    </a>
+                </h4>
+                <div class="small-price-wrapper">
+                  {% if ProductBlock.compare_at_price > ProductBlock.price %}
+                    <span class="small-compare-price">{{ ProductBlock.compare_at_price | money }}</span>
+                  {% endif %}
+                  <span class="small-product-price">{{ ProductBlock.price | money }}</span>
+                </div>
+              </div>
+              <a href="{{ ProductBlock.url }}" class="add-to-cart-btn" aria-label="Add to cart">
+                {{- 'icon-plus-cart.svg' | inline_asset_content -}}
+              </a>
             </div>
-            <a href="{{ ProductBlock.url }}" class="add-to-cart-btn" aria-label="Add to cart">
-              {{- 'icon-plus-cart.svg' | inline_asset_content -}}
-            </a>
           </div>
         </div>
-      </div>
-    {% endfor %}
-  </div>
-</div> 
-
-<style>
-    .video-product-section {
-      padding: 60px 0;
-      background-color: {{ section.settings.bg_color }};
-      overflow: hidden;
-    }
-
-    .video-product-section-title-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 6rem 1rem;
-        @media only screen and (max-width: 749px) {
-            padding: 0 6rem 2.8rem;
-            flex-direction: column;
-            gap: 0;
-        }
-    }
-
-    .video-product-section-title-wrapper .section-sub {
-        color: #000;
-        margin: 0;
-        line-height: 1;
-      text-transform: uppercase;
-        @media only screen and (max-width: 749px) {
-            font-size: 13px;
-        }
-    }
-
-    .video-product-section .section-title {
-      font-size: 44px;
-      line-height: 1;
-      text-align: left;
-      margin-bottom: 0;
-      text-transform: uppercase;
-      margin-top: 0;
-      color: #000;
-      @media only screen and (max-width: 749px) {
-          font-size: 24px !important;
-          margin-bottom: 9px !important;
-          line-height: 31px !important;
-      }
-    }
-
-    .video-product-section .product-slider-center {
-      margin: 0;
-      padding: 0;
-    }
-
-    .video-product-section .product-card {
-      padding: 0;
-      transition: all 0.5s ease;
-      border: 1px solid black;
-    }
-    .video-product-section .product-slider-center .slick-slide {
-        padding: 0 5px;
-    }
-
-    .video-product-section .product-image {
-      position: relative;
-      overflow: hidden;
-      transition: all 0.5s ease;
-      margin-bottom: 0;
-    }
-
-    .video-product-section .product-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-
-    .video-product-section .product-info {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 20px;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-      color: #fff;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s ease;
-    }
-    .video-product-section .slick-list {
-      overflow: visible;
-  }
-    .video-product-section .slick-track {
-      display: flex;
-      align-items: center;
-  }
-    .video-product-section .slick-center {
-        z-index: 2;
-    }
-    
-    .video-product-section .product-title {
-      font-size: 1.6rem;
-      font-weight: 500;
-      margin-bottom: 10px;
-    }
-
-    .video-product-section .price-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .video-product-section .compare-price {
-      font-size: 1.4rem;
-      text-decoration: line-through;
-      opacity: 0.7;
-    }
-
-    .video-product-section .product-price {
-      font-size: 1.8rem;
-      font-weight: 600;
-    }
-
-    .video-product-section .slick-current {
-      z-index: 2;
-    }
-
-    .video-product-section .slick-current .product-info {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
- 
-
-    
-
-    .video-product-section .product-card-small {
-        position: relative;
-        background: #fff;
-        padding: 6px 17px 6px 6px;
-        margin-top: 0;
-        box-shadow: none;
-        transition: all 0.3s ease;
-    }
-
-    .video-product-section .small-card-content {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .video-product-section .small-product-image {
-      width: 68px;
-      height: 84px;
-    }
-
-    .video-product-section .small-product-image img {
-        width: auto;
-        height: 100%;
-    }
-
-    .video-product-section .small-product-details {
-      flex-grow: 1;
-      min-width: 0;
-    }
-
-    .video-product-section .small-product-title {
-        font-size: 1.4rem;
-        font-weight: 400;
-        margin: 0 0 7px;
-        font-family: 'Helvetica';
-        line-height: normal;
-    }
-
-    .video-product-section .small-product-title a {
-        color: #000;
-        text-decoration: none;
-    }
-
-    .video-product-section .small-price-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .video-product-section .small-compare-price {
-      font-size: 1.4rem;
-      color: #989898;
-      text-decoration: line-through;
-      line-height: 21px;
-    }
-
-    .video-product-section .small-product-price {
-        font-size: 1.4rem;
-        color: #000;
-        line-height: normal;
-    }
-
-    .video-product-section .add-to-cart-btn {
-      border-radius: 50%;
-      background: #fff;
-      border: none;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: height 0.7s cubic-bezier(0.77, 0, 0.175, 1), transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
- 
-      padding: 0;
-    }
-
-    .video-product-section .slick-slide {
-        transition: height 0.7s cubic-bezier(0.77, 0, 0.175, 1), transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
- 
-    }
-
-    .video-product-section .product-video {
-      width: 100%;
-      height: 100%;
-      transition: height 0.7s cubic-bezier(0.77, 0, 0.175, 1), transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
- 
-      object-fit: cover;
-      display: block;
-    }
-
-    .video-product-section .slick-current img.product-video {
-        height: 710px;        
-    }
+      {% endfor %}
+    </div>
+  </div> 
   
-    .video-product-section .slick-center .small-product-image {
-        width: 68px;
-        height: 84px;
-  }
- 
-
-    @media screen and (max-width: 767px) {
-      .video-product-section .section-title {
-          font-size: 26px;
-          margin-bottom: 42px;
-          line-height: 31px;
-      }
-      .video-product-section .product-video {
-        max-height: 350px;
-      }
-      .video-product-section .slick-center .product-image .product-video {
-          max-height: 470px;
-      }
-      .video-product-section .product-title {
-        font-size: 1.4rem;
-      }
-
-      .video-product-section .compare-price {
-        font-size: 1.2rem;
-      }
-
-      .video-product-section .product-price {
-        font-size: 1.6rem;
-      }
-
-
+  <style>
       .video-product-section {
-          padding: 36px 0 50px;
-          margin-bottom: 0;
+        padding: 60px 0;
+        background-color: {{ section.settings.bg_color }};
+        overflow: hidden;
       }
-       
-      .video-product-section .product-card-small {
-    margin-top: 0;
-}
-      .video-product-section .product-card-small {
-    margin-top: 0;
-    padding: 4px 7px 4px 4px;
-}
-      .video-product-section .slick-center .small-product-image {
-    width: 52px;
-    height: 64px;
-}
-      .video-product-section .small-card-content {
-        gap : 8px;
+  
+      .video-product-section-title-wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 6rem 1rem;
+          @media only screen and (max-width: 749px) {
+              padding: 0 6rem 2.8rem;
+              flex-direction: column;
+              gap: 0;
+          }
       }
-      .video-product-section .small-product-title {
-    font-size: 11px;
-    line-height: 16px;
-        margin-bottom: 3px;
-}
-      .video-product-section .small-product-price,
-      .video-product-section .small-compare-price{
-    font-size: 10px;
-    line-height: 15px;
-}
-      .video-product-section .product-card {
+  
+      .video-product-section-title-wrapper .section-sub {
+          color: #000;
+          margin: 0;
+          line-height: 1;
+        text-transform: uppercase;
+          @media only screen and (max-width: 749px) {
+              font-size: 13px;
+          }
+      }
+  
+      .video-product-section .section-title {
+        font-size: 44px;
+        line-height: 1;
+        text-align: left;
+        margin-bottom: 0;
+        text-transform: uppercase;
+        margin-top: 0;
+        color: #000;
+        @media only screen and (max-width: 749px) {
+            font-size: 24px !important;
+            margin-bottom: 9px !important;
+            line-height: 31px !important;
+        }
+      }
+  
+      .video-product-section .product-slider-center {
+        margin: 0;
         padding: 0;
       }
+  
+      .video-product-section .product-card {
+        padding: 0;
+        transition: all 0.5s ease;
+        border: 1px solid black;
+      }
+      .video-product-section .product-slider-center .slick-slide {
+          padding: 0 5px;
+      }
+  
+      .video-product-section .product-image {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s ease;
+        margin-bottom: 0;
+      }
+  
+      .video-product-section .product-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.5s ease;
+      }
+  
+      .video-product-section .product-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        color: #fff;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+      }
+      .video-product-section .slick-list {
+        overflow: visible;
     }
-
-  @media only screen and (max-width: 1600px) {
-      .video-product-section .slick-current img.product-video {
-          height: 600px;
-      }
-  }
-
-  @media only screen and (max-width: 1440px) {
-      .video-product-section .slick-current img.product-video {
-          height: 500px;
-      }
-  }
-
-  @media only screen and (max-width: 1380px) {
-      .video-product-section .slick-current img.product-video {
-          height: 450px;
-      }
-  }
-
-  @media only screen and (max-width: 1300px) {
-      .video-product-section .slick-current img.product-video {
-          height: 440px;
-      }
-  }
-
-  @media only screen and (max-width: 1200px) {
-      .video-product-section .slick-current img.product-video {
-          height: 350px;
-      }
-  }
-
-  @media only screen and (max-width: 1024px) {
-      .video-product-section .slick-current img.product-video {
-          height: 510px;
-      }
-  }
-
-
-  @media only screen and (max-width: 920px) {
-    .video-product-section .slick-current img.product-video {
-      height: 1200px;
+      .video-product-section .slick-track {
+        display: flex;
+        align-items: center;
     }
-  }
-
-  @media only screen and (max-width: 500px) {
-    .video-product-section .slick-current img.product-video {
-      height: 390px;
-    }
-  }
-
-  @media only screen and (max-width: 749px) {
-      .video-product-section .slick-dots {
+      .video-product-section .slick-center {
+          z-index: 2;
+      }
+      
+      .video-product-section .product-title {
+        font-size: 1.6rem;
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+  
+      .video-product-section .price-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+  
+      .video-product-section .compare-price {
+        font-size: 1.4rem;
+        text-decoration: line-through;
+        opacity: 0.7;
+      }
+  
+      .video-product-section .product-price {
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+  
+      .video-product-section .slick-current {
+        z-index: 2;
+      }
+  
+      .video-product-section .slick-current .product-info {
+        opacity: 1;
+        transform: translateY(0);
+      }
+  
+   
+  
+      
+  
+      .video-product-section .product-card-small {
           position: relative;
-          bottom: 0;
-          margin-top: 20px;
-          li {
-              width: auto;
-              height: auto;
-              margin: 0;
-              button {
-                  padding: 0;
-                  height: 2px;
-                  width: 50px;
-                  background: #C5C5C5;
-                  &:before {
-                      display: none;
-                  }
-              }
-              &.slick-active {
-                  button {
-                      background: #000000;
-                  }
-              }
-          }
+          background: #fff;
+          padding: 6px 17px 6px 6px;
+          margin-top: 0;
+          box-shadow: none;
+          transition: all 0.3s ease;
       }
-  }
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-
-    // Initialize Slick
-    jQuery('.product-slider-center').slick({
-      centerMode: true,
-      centerPadding: '350px',
-      slidesToShow: {{ section.settings.slide_show_desktop | default: 3 | json }},
-      speed: 600,
-      cssEase: 'ease-in-out',
-      autoplay: false,
-      autoplaySpeed: 1500,
-      arrows: false,
-      dots: false,
-      swipeToSlide: true,
-      touchThreshold: 10,
-      draggable: true,
-      swipe: true,
-      responsive: [
-        {
-          breakpoint: 1600,
-          settings: {
-            centerPadding: '275px',
-            slidesToShow: {{ section.settings.slide_show_desktop | default: 3 | json }}
-          }
-        },
-        {
-          breakpoint: 1300,
-          settings: {
-            centerPadding: '220px',
-            slidesToShow: {{ section.settings.slide_show_desktop | default: 3 | json }}
-          }
-        },
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            centerPadding: '60px'
-          }
-        },
-        {
-          breakpoint: 920,
-          settings: {
-            slidesToShow: {{ section.settings.slide_show_mobile | default: 1 | json }},
-            centerPadding: '100px'
-          }
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: {{ section.settings.slide_show_mobile | default: 1 | json }},
-            centerPadding: '100px',
-            dots: true
-          }
-        },
-        {
-          breakpoint: 640,
-          settings: {
-            slidesToShow: {{ section.settings.slide_show_mobile | default: 1 | json }},
-            centerPadding: '80px',
-            dots: true
-          }
+  
+      .video-product-section .small-card-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+  
+      .video-product-section .small-product-image {
+        width: 68px;
+        height: 84px;
+      }
+  
+      .video-product-section .small-product-image img {
+          width: auto;
+          height: 100%;
+      }
+  
+      .video-product-section .small-product-details {
+        flex-grow: 1;
+        min-width: 0;
+      }
+  
+      .video-product-section .small-product-title {
+          font-size: 1.4rem;
+          font-weight: 400;
+          margin: 0 0 7px;
+          font-family: 'Helvetica';
+          line-height: normal;
+      }
+  
+      .video-product-section .small-product-title a {
+          color: #000;
+          text-decoration: none;
+      }
+  
+      .video-product-section .small-price-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+  
+      .video-product-section .small-compare-price {
+        font-size: 1.4rem;
+        color: #989898;
+        text-decoration: line-through;
+        line-height: 21px;
+      }
+  
+      .video-product-section .small-product-price {
+          font-size: 1.4rem;
+          color: #000;
+          line-height: normal;
+      }
+  
+      .video-product-section .add-to-cart-btn {
+        border-radius: 50%;
+        background: #fff;
+        border: none;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: height 0.7s cubic-bezier(0.77, 0, 0.175, 1), transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+   
+        padding: 0;
+      }
+  
+      .video-product-section .slick-slide {
+          transition: height 0.7s cubic-bezier(0.77, 0, 0.175, 1), transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+   
+      }
+  
+      .video-product-section .product-video {
+        width: 100%;
+        height: 100%;
+        transition: height 0.7s cubic-bezier(0.77, 0, 0.175, 1), transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+   
+        object-fit: cover;
+        display: block;
+      }
+  
+      .video-product-section .slick-current img.product-video {
+          height: 710px;        
+      }
+    
+      .video-product-section .slick-center .small-product-image {
+          width: 68px;
+          height: 84px;
+    }
+   
+  
+      @media screen and (max-width: 767px) {
+        .video-product-section .section-title {
+            font-size: 26px;
+            margin-bottom: 42px;
+            line-height: 31px;
         }
-      ]
+        .video-product-section .product-video {
+          max-height: 350px;
+        }
+        .video-product-section .slick-center .product-image .product-video {
+            max-height: 470px;
+        }
+        .video-product-section .product-title {
+          font-size: 1.4rem;
+        }
+  
+        .video-product-section .compare-price {
+          font-size: 1.2rem;
+        }
+  
+        .video-product-section .product-price {
+          font-size: 1.6rem;
+        }
+  
+  
+        .video-product-section {
+            padding: 36px 0 50px;
+            margin-bottom: 0;
+        }
+         
+        .video-product-section .product-card-small {
+      margin-top: 0;
+  }
+        .video-product-section .product-card-small {
+      margin-top: 0;
+      padding: 4px 7px 4px 4px;
+  }
+        .video-product-section .slick-center .small-product-image {
+      width: 52px;
+      height: 64px;
+  }
+        .video-product-section .small-card-content {
+          gap : 8px;
+        }
+        .video-product-section .small-product-title {
+      font-size: 11px;
+      line-height: 16px;
+          margin-bottom: 3px;
+  }
+        .video-product-section .small-product-price,
+        .video-product-section .small-compare-price{
+      font-size: 10px;
+      line-height: 15px;
+  }
+        .video-product-section .product-card {
+          padding: 0;
+        }
+      }
+  
+    @media only screen and (max-width: 1600px) {
+        .video-product-section .slick-current img.product-video {
+            height: 600px;
+        }
+    }
+  
+    @media only screen and (max-width: 1440px) {
+        .video-product-section .slick-current img.product-video {
+            height: 500px;
+        }
+    }
+  
+    @media only screen and (max-width: 1380px) {
+        .video-product-section .slick-current img.product-video {
+            height: 450px;
+        }
+    }
+  
+    @media only screen and (max-width: 1300px) {
+        .video-product-section .slick-current img.product-video {
+            height: 440px;
+        }
+    }
+  
+    @media only screen and (max-width: 1200px) {
+        .video-product-section .slick-current img.product-video {
+            height: 350px;
+        }
+    }
+  
+    @media only screen and (max-width: 1024px) {
+        .video-product-section .slick-current img.product-video {
+            height: 510px;
+        }
+    }
+  
+  
+    @media only screen and (max-width: 920px) {
+      .video-product-section .slick-current img.product-video {
+        height: 1200px;
+      }
+    }
+  
+    @media only screen and (max-width: 500px) {
+      .video-product-section .slick-current img.product-video {
+        height: 390px;
+      }
+    }
+  
+    @media only screen and (max-width: 749px) {
+        .video-product-section .slick-dots {
+            position: relative;
+            bottom: 0;
+            margin-top: 20px;
+            li {
+                width: auto;
+                height: auto;
+                margin: 0;
+                button {
+                    padding: 0;
+                    height: 2px;
+                    width: 50px;
+                    background: #C5C5C5;
+                    &:before {
+                        display: none;
+                    }
+                }
+                &.slick-active {
+                    button {
+                        background: #000000;
+                    }
+                }
+            }
+        }
+    }
+  
+    /* --- Custom Center Slide Effect --- */
+    .video-product-section .product-slider-center .product-card {
+      transition: transform 0.5s, opacity 0.5s;
+      opacity: 0.5;
+      transform: scale(0.85);
+      z-index: 1;
+    }
+    .video-product-section .product-slider-center .slick-center .product-card {
+      opacity: 1;
+      transform: scale(1.08);
+      z-index: 2;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    }
+    /* Optional: smooth transition for images too */
+    .video-product-section .product-slider-center .product-card .product-video {
+      transition: box-shadow 0.5s, border-radius 0.5s;
+      border-radius: 10px;
+    }
+    .video-product-section .product-slider-center .slick-center .product-card .product-video {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+      border-radius: 16px;
+    }
+    /* Make sure slick-slide is flex for proper scaling */
+    .video-product-section .product-slider-center .slick-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* --- End Custom Center Slide Effect --- */
+  </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+  
+      // Initialize Slick
+      jQuery('.product-slider-center').slick({
+        centerMode: true,
+        centerPadding: '350px',
+        slidesToShow: {{ section.settings.slide_show_desktop | default: 3 | json }},
+        speed: 600,
+        cssEase: 'ease-in-out',
+        autoplay: false,
+        autoplaySpeed: 1500,
+        arrows: false,
+        dots: false,
+        swipeToSlide: true,
+        touchThreshold: 10,
+        draggable: true,
+        swipe: true,
+        responsive: [
+          {
+            breakpoint: 1600,
+            settings: {
+              centerPadding: '275px',
+              slidesToShow: {{ section.settings.slide_show_desktop | default: 3 | json }}
+            }
+          },
+          {
+            breakpoint: 1300,
+            settings: {
+              centerPadding: '220px',
+              slidesToShow: {{ section.settings.slide_show_desktop | default: 3 | json }}
+            }
+          },
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              centerPadding: '60px'
+            }
+          },
+          {
+            breakpoint: 920,
+            settings: {
+              slidesToShow: {{ section.settings.slide_show_mobile | default: 1 | json }},
+              centerPadding: '100px'
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: {{ section.settings.slide_show_mobile | default: 1 | json }},
+              centerPadding: '100px',
+              dots: true
+            }
+          },
+          {
+            breakpoint: 640,
+            settings: {
+              slidesToShow: {{ section.settings.slide_show_mobile | default: 1 | json }},
+              centerPadding: '80px',
+              dots: true
+            }
+          }
+        ]
+      });
+  
+      // --- Custom Center Slide Effect Script (optional, for extra polish) ---
+      jQuery('.product-slider-center').on('afterChange', function(event, slick, currentSlide){
+        // Remove custom class from all
+        jQuery('.product-slider-center .slick-slide').removeClass('is-center-custom');
+        // Add to the current center
+        jQuery('.product-slider-center .slick-center').addClass('is-center-custom');
+      });
+      // Initial trigger
+      setTimeout(function(){
+        jQuery('.product-slider-center .slick-center').addClass('is-center-custom');
+      }, 100);
+      // --- End Custom Center Slide Effect Script ---
+  
     });
-
-  });
-</script>
+  </script>
