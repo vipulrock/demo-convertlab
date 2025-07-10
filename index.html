@@ -1,558 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slider</title>
-    <style>
-        body {
-            font-family: sans-serif;
-        }
-
-        .page-width {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .custom-carousel {
-            visibility: hidden; /* Hide until JS is loaded */
-        }
-
-        .carousel-container {
-            padding: 0px 0px;
-            margin-top: 16px;
-            direction: ltr;
-        }
-
-        .carousel-viewport {
-            position: relative;
-            margin: 0 auto 16px;
-            height: 690px;
-            width: 100%;
-            max-width: 100%;
-            overflow: hidden;
-        }
-
-        .carousel-slide {
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 316px;
-            height: 100%;
-            padding: 0px 8px;
-            flex-shrink: 0;
-            transition: transform 0.5s, width 0.5s, opacity 0.5s;
-            cursor: pointer;
-        }
-
-        .carousel-slide-content {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 300px;
-            height: 483px;
-            transition: width 0.5s, height 0.5s;
-            gap: 15px;
-            background-color: undefined;
-            border-radius: 10px;
-        }
-
-        .carousel-image-container {
-            position: relative;
-            width: 300px;
-            height: 388px;
-            min-height: 388px;
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: cover;
-            transition: width 0.5s, height 0.5s;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .carousel-image {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: border-radius 0.5s;
-        }
-
-        .product-info {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            bottom: 0;
-            width: 100%;
-            padding-right: 44px;
-            border-radius: 5px;
-            border: 1px solid #d8d8d8;
-            background: white;
-            overflow: hidden;
-            transition: min-height 0.3s ease, max-height 0.3s ease;
-            min-height: 80px;
-            max-height: 80px;
-        }
-
-        .product-item {
-            display: flex;
-            min-height: 80px;
-        }
-
-        .product-item-main {
-            display: flex;
-            gap: 10px;
-            padding: 10px;
-            flex-grow: 1;
-        }
-
-        .product-item-image {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
-        .product-item-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .product-text-container-inner {
-            flex: 1;
-            display: flex;
-            gap: 2px;
-            overflow: hidden;
-            flex-direction: column;
-        }
-
-        .product-item-title {
-            flex-grow: 0;
-            max-height: 2.2em;
-            line-height: 1.1em;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .add-to-cart-button {
-            display: block;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            align-self: center;
-        }
-        
-        .product-divider {
-            display: block;
-            min-height: 1px;
-            width: 100%;
-            background-color: #ccc;
-        }
-        
-        .center-tile .carousel-slide-content {
-            height: 595px;
-        }
-
-        .center-tile .carousel-image-container {
-            height: 500px;
-        }
-
-        .carousel-arrows {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 24px;
-            justify-self: center;
-            width: 100%;
-        }
-
-        .carousel-arrow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            padding: 0;
-            cursor: pointer;
-            border: none;
-            background: none;
-        }
-
-        .carousel-arrow-next {
-            transform: scaleX(-1);
-        }
-    </style>
-</head>
-<body>
-
-<div class="page-width">
-    <div class="carousel-widget">
-        <div class="custom-carousel">
-            <div class="carousel-container">
-                <div class="carousel-viewport">
-                    <div class="carousel-slide">
-                        <div class="carousel-slide-content">
-                            <div class="carousel-image-container">
-                                <img class="carousel-image" src="https://dev-convertlab.myshopify.com/cdn/shop/files/45.jpg?v=1749618445" alt="Slide 1">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/a1.webp?v=1693891405&amp;width=800" alt="Jordan 1 Mid Black White Diamond Men's – Pimp Kicks">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Jordan 1 Mid Black White Diamond Men's – Pimp Kicks</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="product-divider"></div>
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/22.webp?v=1693891740&amp;width=800" alt="Nike Air Jordan 1 Mid Bred Alternate Black Red">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Nike Air Jordan 1 Mid Bred Alternate Black Red</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-slide-content">
-                            <div class="carousel-image-container">
-                                <img class="carousel-image" src="https://dev-convertlab.myshopify.com/cdn/shop/files/45.jpg?v=1749618445" alt="Slide 2">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/aa.webp?v=1693891859&amp;width=800" alt="Air Jordan 1 Mid Black Orange White">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Air Jordan 1 Mid Black Orange White</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="product-divider"></div>
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/1132.webp?v=1693891804&amp;width=800" alt="Jordan Air Jordan 1 Retro Mid Mens Basketball Shoes Blue Orange FD1029-400">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Jordan Air Jordan 1 Retro Mid Mens Basketball Shoes Blue Orange FD1029-400</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-slide-content">
-                            <div class="carousel-image-container">
-                                <img class="carousel-image" src="https://dev-convertlab.myshopify.com/cdn/shop/files/45.jpg?v=1749618445" alt="Slide 3">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/22.webp?v=1693891740&amp;width=800" alt="Nike Air Jordan 1 Mid Bred Alternate Black Red">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Nike Air Jordan 1 Mid Bred Alternate Black Red</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="product-divider"></div>
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/aa.webp?v=1693891859&amp;width=800" alt="Air Jordan 1 Mid Black Orange White">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Air Jordan 1 Mid Black Orange White</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-slide-content">
-                            <div class="carousel-image-container">
-                                <img class="carousel-image" src="https://dev-convertlab.myshopify.com/cdn/shop/files/45.jpg?v=1749618445" alt="Slide 4">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/1132.webp?v=1693891804&amp;width=800" alt="Jordan Air Jordan 1 Retro Mid Mens Basketball Shoes Blue Orange FD1029-400">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Jordan Air Jordan 1 Retro Mid Mens Basketball Shoes Blue Orange FD1029-400</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-slide-content">
-                            <div class="carousel-image-container">
-                                <img class="carousel-image" src="https://dev-convertlab.myshopify.com/cdn/shop/files/45.jpg?v=1749618445" alt="Slide 5">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/a1.webp?v=1693891405&amp;width=800" alt="Jordan 1 Mid Black White Diamond Men's – Pimp Kicks">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Jordan 1 Mid Black White Diamond Men's – Pimp Kicks</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="product-divider"></div>
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/22.webp?v=1693891740&amp;width=800" alt="Nike Air Jordan 1 Mid Bred Alternate Black Red">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Nike Air Jordan 1 Mid Bred Alternate Black Red</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-slide">
-                        <div class="carousel-slide-content">
-                            <div class="carousel-image-container">
-                                <img class="carousel-image" src="https://dev-convertlab.myshopify.com/cdn/shop/files/45.jpg?v=1749618445" alt="Slide 6">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/a1.webp?v=1693891405&amp;width=800" alt="Jordan 1 Mid Black White Diamond Men's – Pimp Kicks">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Jordan 1 Mid Black White Diamond Men's – Pimp Kicks</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="product-divider"></div>
-                                <div class="product-item">
-                                    <div class="product-item-main">
-                                        <img loading="lazy" class="product-item-image" src="https://cdn.shopify.com/s/files/1/0818/5996/9329/files/1132.webp?v=1693891804&amp;width=800" alt="Jordan Air Jordan 1 Retro Mid Mens Basketball Shoes Blue Orange FD1029-400">
-                                        <div class="product-item-text">
-                                            <div class="product-text-container-inner">
-                                                <div class="product-item-title">Jordan Air Jordan 1 Retro Mid Mens Basketball Shoes Blue Orange FD1029-400</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="add-to-cart-button" title="Add to cart" aria-label="Add to cart" type="button">
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="30" height="30" rx="15" fill="#090A0B"></rect>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 11a1 1 0 1 0-2 0v3h-3a1 1 0 1 0 0 2h3v3a1 1 0 0 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-3Z" fill="#fff"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="carousel-arrows">
-                    <button class="carousel-arrow carousel-arrow-prev" aria-label="Go to previous item" type="button">
-                        <svg width="18" height="10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 8.9a1 1 0 0 1-1.414 0L.395 5.708a1 1 0 0 1-.001-1.415L3.586 1.1A1 1 0 0 1 5 2.515L3.515 4H17a1 1 0 1 1 0 2H3.515L5 7.485A1 1 0 0 1 5 8.9Z"
-                                  fill="#000"></path>
-                        </svg>
-                    </button>
-                    <button class="carousel-arrow carousel-arrow-next" aria-label="Go to next item" type="button">
-                        <svg width="18" height="10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 8.9a1 1 0 0 1-1.414 0L.395 5.708a1 1 0 0 1-.001-1.415L3.586 1.1A1 1 0 0 1 5 2.515L3.515 4H17a1 1 0 1 1 0 2H3.515L5 7.485A1 1 0 0 1 5 8.9Z"
-                                  fill="#000"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
+<div class="inspired-section page-width">
+    <div class="inspired-header page-width">
+      <h2 class="inspired-title">{{ section.settings.heading }}</h2>
+      <div class="inspired-hashtag">{{ section.settings.subheading }}</div>
     </div>
-</div>
+    <div class="image-grid">
+      {% for block in section.blocks %}
+          <img src="{{ block.settings.image | img_url: 'master' }}" width="" height="" alt="Image 1"/>
+      {% endfor %}
+    </div>
+  </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const carousel = document.querySelector('.custom-carousel');
-        const container = carousel.querySelector('.carousel-viewport');
-        const prevButton = carousel.querySelector('.carousel-arrow-prev');
-        const nextButton = carousel.querySelector('.carousel-arrow-next');
+<style>
 
-        const tiles = Array.from(carousel.querySelectorAll('.carousel-slide'));
-        const originalSlideCount = tiles.length;
-        let isTransitioning = false;
+.inspired-section {
+  width: 100%;
+  margin: 0 auto;
+  padding: 50px 0 0;
+    @media only screen and (max-width: 749px) {
+        padding: 40px 0 0;     
+    }
+}
 
-        // Clone slides for infinite loop
-        const clonesToShow = 3;
-        for (let i = 0; i < clonesToShow; i++) {
-            container.appendChild(tiles[i].cloneNode(true));
-        }
-        for (let i = originalSlideCount - 1; i >= originalSlideCount - clonesToShow; i--) {
-            container.prepend(tiles[i].cloneNode(true));
-        }
-        
-        const allTiles = Array.from(carousel.querySelectorAll('.carousel-slide'));
-        let currentIndex = clonesToShow + Math.floor(originalSlideCount / 2);
+.inspired-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-        function updateCarousel(instant = false) {
-            const containerWidth = container.offsetWidth;
-            const slideWidth = allTiles[0].offsetWidth;
-            const centeredSlideOffset = (containerWidth - slideWidth) / 2;
+.inspired-title {
+  font-size: 3.2rem;
+  margin: 0;
+    @media only screen and (max-width: 749px) {
+        font-size: 2.4rem;      
+    }
+}
 
-            allTiles.forEach((tile, index) => {
-                if (instant) {
-                    tile.style.transition = 'none';
-                } else {
-                    tile.style.transition = 'transform 0.5s, width 0.5s, opacity 0.5s';
-                }
+.inspired-hashtag {
+  color: #000;
+  @media only screen and (max-width: 749px) {
+      display: none;
+  }
+}
 
-                const offset = (index - currentIndex) * slideWidth;
-                let translateX = centeredSlideOffset + offset;
-                
-                tile.style.transform = `translateX(${translateX}px)`;
-                tile.classList.remove('center-tile');
-                tile.style.opacity = '0.5';
-            });
-            
-            const centerTile = allTiles[currentIndex];
-            if (centerTile) {
-                centerTile.classList.add('center-tile');
-                centerTile.style.opacity = '1';
-            }
-            
-            carousel.style.visibility = 'visible';
+.image-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3,1fr);
+    @media only screen and (max-width: 749px) {
+        gap: 5px;
+        grid-template-columns: repeat(1,1fr);
+    }
+}
 
-            if (!instant) {
-                isTransitioning = true;
-                setTimeout(() => {
-                    isTransitioning = false;
-                    checkAndResetPosition();
-                }, 500); // Transition duration
-            }
-        }
-        
-        function checkAndResetPosition() {
-             if (currentIndex >= originalSlideCount + clonesToShow) {
-                currentIndex = currentIndex - originalSlideCount;
-                updateCarousel(true);
-            } else if (currentIndex < clonesToShow) {
-                currentIndex = currentIndex + originalSlideCount;
-                updateCarousel(true);
-            }
-        }
+.image-grid img {
+    width: 100%; 
+}
 
-        function slideTo(index) {
-            if (isTransitioning) return;
-            currentIndex = index;
-            updateCarousel();
-        }
-
-        prevButton.addEventListener('click', () => {
-            slideTo(currentIndex - 1);
-        });
-
-        nextButton.addEventListener('click', () => {
-            slideTo(currentIndex + 1);
-        });
-
-        allTiles.forEach((tile, index) => {
-            tile.addEventListener('click', () => {
-                if(index !== currentIndex) {
-                   slideTo(index);
-                }
-            });
-        });
-
-        window.addEventListener('resize', () => updateCarousel(true));
-
-        // Initial setup
-        updateCarousel(true);
-    });
-</script>
-
-</body>
-</html>
+</style>
