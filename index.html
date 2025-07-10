@@ -8,18 +8,6 @@
           <img src="{{ block.settings.image | img_url: 'master' }}" width="" height="" alt="Image 1"/>
       {% endfor %}
     </div>
-    <!-- Mobile Slider Start -->
-    <div class="mobile-slider" style="display:none;">
-      <div class="slider-track">
-        {% for block in section.blocks %}
-          <div class="slider-item">
-            <img src="{{ block.settings.image | img_url: 'master' }}" alt="Image {{ forloop.index }}" />
-          </div>
-        {% endfor %}
-      </div>
-      <div class="slider-scrollbar"></div>
-    </div>
-    <!-- Mobile Slider End -->
   </div>
 
 <style>
@@ -60,7 +48,8 @@
     gap: 10px;
     grid-template-columns: repeat(3,1fr);
     @media only screen and (max-width: 749px) {
-        display: none;
+        gap: 5px;
+        grid-template-columns: repeat(1,1fr);
     }
 }
 
@@ -68,135 +57,4 @@
     width: 100%; 
 }
 
-.mobile-slider {
-    display: none;
-}
-
-@media only screen and (max-width: 749px) {
-  .image-grid {
-    display: none;
-  }
-  .mobile-slider {
-    display: block;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
-  .slider-track {
-    display: flex;
-    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
-    will-change: transform;
-  }
-  .slider-item {
-    min-width: 100%;
-    box-sizing: border-box;
-    flex-shrink: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Remove overflow hidden to allow natural image ratio */
-  }
-  .slider-item img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    /* Remove width: 100% to preserve aspect ratio */
-  }
-  .slider-scrollbar {
-    width: 100%;
-    height: 2px;
-    background: #e0e0e0;
-    border-radius: 1px;
-    margin-top: 30px;
-    position: relative;
-    overflow: hidden;
-  }
-  .slider-scrollbar-inner {
-    height: 100%;
-    border-radius: 1px;
-    transition: width 0.3s, left 0.3s;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: #8B5C2A; /* brown */
-    z-index: 2;
-  }
-}
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  function isMobile() {
-    return window.innerWidth <= 749;
-  }
-
-  var slider = document.querySelector('.mobile-slider');
-  var track = document.querySelector('.slider-track');
-  var items = document.querySelectorAll('.slider-item');
-  var scrollbar = document.querySelector('.slider-scrollbar');
-  var total = items.length;
-  var current = 0;
-  var interval = 3000; // 3 seconds
-  var autoSlide;
-
-  function createScrollbar() {
-    scrollbar.innerHTML = '';
-    var bar = document.createElement('div');
-    bar.className = 'slider-scrollbar-inner';
-    bar.style.width = (100 / total) + '%';
-    bar.style.left = (current * 100 / total) + '%';
-    scrollbar.appendChild(bar);
-  }
-
-  function updateScrollbar() {
-    var bar = scrollbar.querySelector('.slider-scrollbar-inner');
-    if (bar) {
-      bar.style.width = (100 / total) + '%';
-      bar.style.left = (current * 100 / total) + '%';
-    }
-  }
-
-  function goToSlide(idx) {
-    current = idx;
-    if (current < 0) current = total - 1;
-    if (current >= total) current = 0;
-    track.style.transform = 'translateX(' + (-current * 100) + '%)';
-    updateScrollbar();
-  }
-
-  function startAutoSlide() {
-    autoSlide = setInterval(function() {
-      goToSlide((current + 1) % total);
-    }, interval);
-  }
-
-  function stopAutoSlide() {
-    clearInterval(autoSlide);
-  }
-
-  function setupSlider() {
-    if (!isMobile()) {
-      slider.style.display = 'none';
-      return;
-    }
-    slider.style.display = 'block';
-    createScrollbar();
-    goToSlide(0);
-    stopAutoSlide();
-    startAutoSlide();
-  }
-
-  window.addEventListener('resize', setupSlider);
-  setupSlider();
-
-  // Infinite loop: when transition ends, check if at end and reset without animation
-  track.addEventListener('transitionend', function() {
-    // No need for clone logic since we loop with goToSlide
-  });
-
-  // Optional: Pause on touch
-  slider.addEventListener('touchstart', stopAutoSlide);
-  slider.addEventListener('touchend', startAutoSlide);
-});
-</script>
