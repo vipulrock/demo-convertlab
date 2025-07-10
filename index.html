@@ -48,13 +48,72 @@
     gap: 10px;
     grid-template-columns: repeat(3,1fr);
     @media only screen and (max-width: 749px) {
-        gap: 5px;
-        grid-template-columns: repeat(1,1fr);
+        display: flex;
+        overflow-x: auto;
+        gap: 0;
+        grid-template-columns: none;
+        scrollbar-width: thin;
+        scrollbar-color: #000 #e0e0e0;
     }
+}
+
+@media only screen and (max-width: 749px) {
+.image-grid::-webkit-scrollbar {
+    height: 4px;
+}
+.image-grid::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 2px;
+}
+.image-grid::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 2px;
+}
 }
 
 .image-grid img {
     width: 100%; 
+    @media only screen and (max-width: 749px) {
+        width: 80vw;
+        flex: 0 0 80vw;
+        max-width: 300px;
+        margin-right: 10px;
+    }
 }
 
 </style>
+
+<script>
+(function() {
+  // Only run on mobile
+  if (window.innerWidth > 749) return;
+
+  const grid = document.querySelector('.image-grid');
+  if (!grid) return;
+  const images = Array.from(grid.children);
+  if (images.length < 2) return;
+
+  // Clone images for infinite effect
+  images.forEach(img => grid.appendChild(img.cloneNode(true)));
+
+  let scrollAmount = 0;
+  const slideWidth = images[0].offsetWidth + 10; // 10px margin
+  const slideInterval = 2000; // 2 seconds
+
+  function autoSlide() {
+    scrollAmount += slideWidth;
+    if (scrollAmount >= grid.scrollWidth / 2) {
+      scrollAmount = 0;
+      grid.scrollLeft = 0;
+    } else {
+      grid.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+    }
+  }
+
+  let interval = setInterval(autoSlide, slideInterval);
+
+  // Pause on user interaction
+  grid.addEventListener('touchstart', () => clearInterval(interval), { passive: true });
+  grid.addEventListener('touchend', () => interval = setInterval(autoSlide, slideInterval), { passive: true });
+})();
+</script>
